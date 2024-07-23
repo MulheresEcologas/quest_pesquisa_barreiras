@@ -1,0 +1,317 @@
+"","Category","Group_gender","Group_time2","Sum","Question"
+"1","End of temporary contract","Men","Junior",0,"Q19"
+"2","End of temporary contract","Men","Senior",0,"Q19"
+"3","End of temporary contract","Women","Junior",1,"Q19"
+"4","End of temporary contract","Women","Senior",0,"Q19"
+"5","Retired","Men","Junior",0,"Q19"
+"6","Retired","Men","Senior",0,"Q19"
+"7","Retired","Women","Junior",0,"Q19"
+"8","Retired","Women","Senior",0,"Q19"
+"9","Better salary","Men","Junior",8,"Q19"
+"10","Better salary","Men","Senior",1,"Q19"
+"11","Better salary","Women","Junior",14,"Q19"
+"12","Better salary","Women","Senior",2,"Q19"
+"13","Starting a temporary or 
+ permanent contract","Men","Junior",7,"Q19"
+"14","Starting a temporary or 
+ permanent contract","Men","Senior",3,"Q19"
+"15","Starting a temporary or 
+ permanent contract","Women","Junior",6,"Q19"
+"16","Starting a temporary or 
+ permanent contract","Women","Senior",5,"Q19"
+"17","Fired from my last job","Men","Junior",0,"Q19"
+"18","Fired from my last job","Men","Senior",0,"Q19"
+"19","Fired from my last job","Women","Junior",0,"Q19"
+"20","Fired from my last job","Women","Senior",0,"Q19"
+"21","Postgraduate programme preference","Men","Junior",11,"Q19"
+"22","Postgraduate programme preference","Men","Senior",1,"Q19"
+"23","Postgraduate programme preference","Women","Junior",59,"Q19"
+"24","Postgraduate programme preference","Women","Senior",2,"Q19"
+"25","Increased status at work","Men","Junior",1,"Q19"
+"26","Increased status at work","Men","Senior",2,"Q19"
+"27","Increased status at work","Women","Junior",12,"Q19"
+"28","Increased status at work","Women","Senior",1,"Q19"
+"29","Work security","Men","Junior",1,"Q19"
+"30","Work security","Men","Senior",0,"Q19"
+"31","Work security","Women","Junior",5,"Q19"
+"32","Work security","Women","Senior",0,"Q19"
+"33","Focus on research","Men","Junior",4,"Q19"
+"34","Focus on research","Men","Senior",4,"Q19"
+"35","Focus on research","Women","Junior",31,"Q19"
+"36","Focus on research","Women","Senior",3,"Q19"
+"37","Better life quality","Men","Junior",7,"Q19"
+"38","Better life quality","Men","Senior",4,"Q19"
+"39","Better life quality","Women","Junior",22,"Q19"
+"40","Better life quality","Women","Senior",6,"Q19"
+"41","Live close to family 
+ and friends","Men","Junior",2,"Q19"
+"42","Live close to family 
+ and friends","Men","Senior",0,"Q19"
+"43","Live close to family 
+ and friends","Women","Junior",12,"Q19"
+"44","Live close to family 
+ and friends","Women","Senior",1,"Q19"
+"45","Relocating because my partner 
+ has moved","Men","Junior",1,"Q19"
+"46","Relocating because my partner 
+ has moved","Men","Senior",0,"Q19"
+"47","Relocating because my partner 
+ has moved","Women","Junior",11,"Q19"
+"48","Relocating because my partner 
+ has moved","Women","Senior",4,"Q19"
+"49","Not applicable","Men","Junior",7,"Q19"
+"50","Not applicable","Men","Senior",29,"Q19"
+"51","Not applicable","Women","Junior",50,"Q19"
+"52","Not applicable","Women","Senior",59,"Q19"
+"53","Didnt answer","Men","Junior",0,"Q19"
+"54","Didnt answer","Men","Senior",0,"Q19"
+"55","Didnt answer","Women","Junior",0,"Q19"
+"56","Didnt answer","Women","Senior",0,"Q19"
+"57","Less focus on research","Men","Junior",0,"Q19"
+"58","Less focus on research","Men","Senior",1,"Q19"
+"59","Less focus on research","Women","Junior",1,"Q19"
+"60","Less focus on research","Women","Senior",1,"Q19"
+"61","Only job offer that I had","Men","Junior",3,"Q19"
+"62","Only job offer that I had","Men","Senior",1,"Q19"
+"63","Only job offer that I had","Women","Junior",14,"Q19"
+"64","Only job offer that I had","Women","Senior",2,"Q19"
+"65","End of temporary contract","Men","Junior",0,"Q20"
+"66","End of temporary contract","Men","Senior",0,"Q20"
+"67","End of temporary contract","Women","Junior",0,"Q20"
+"68","End of temporary contract","Women","Senior",0,"Q20"
+"69","Partner or significant other hasnt moved in with me,
+ and the relationship had no significant negative effects","Men","Junior",5,"Q20"
+"70","Partner or significant other hasnt moved in with me,
+ and the relationship had no significant negative effects","Men","Senior",2,"Q20"
+"71","Partner or significant other hasnt moved in with me,
+ and the relationship had no significant negative effects","Women","Junior",12,"Q20"
+"72","Partner or significant other hasnt moved in with me,
+ and the relationship had no significant negative effects","Women","Senior",4,"Q20"
+"73","Partner or significant other has moved in with me,
+ with no significant negative effects on the relationship","Men","Junior",5,"Q20"
+"74","Partner or significant other has moved in with me,
+ with no significant negative effects on the relationship","Men","Senior",14,"Q20"
+"75","Partner or significant other has moved in with me,
+ with no significant negative effects on the relationship","Women","Junior",26,"Q20"
+"76","Partner or significant other has moved in with me,
+ with no significant negative effects on the relationship","Women","Senior",15,"Q20"
+"77","Partner or significant other has moved in with me, 
+ and the relationship had significant negative effects","Men","Junior",6,"Q20"
+"78","Partner or significant other has moved in with me, 
+ and the relationship had significant negative effects","Men","Senior",1,"Q20"
+"79","Partner or significant other has moved in with me, 
+ and the relationship had significant negative effects","Women","Junior",17,"Q20"
+"80","Partner or significant other has moved in with me, 
+ and the relationship had significant negative effects","Women","Senior",4,"Q20"
+"81","Partner or significant other hasnt moved in with me, 
+ but with significant negative effects on the relationship","Men","Junior",2,"Q20"
+"82","Partner or significant other hasnt moved in with me, 
+ but with significant negative effects on the relationship","Men","Senior",2,"Q20"
+"83","Partner or significant other hasnt moved in with me, 
+ but with significant negative effects on the relationship","Women","Junior",8,"Q20"
+"84","Partner or significant other hasnt moved in with me, 
+ but with significant negative effects on the relationship","Women","Senior",4,"Q20"
+"85","Partner or other significant person has moved in with me, 
+ but has career problems","Men","Junior",0,"Q20"
+"86","Partner or other significant person has moved in with me, 
+ but has career problems","Men","Senior",6,"Q20"
+"87","Partner or other significant person has moved in with me, 
+ but has career problems","Women","Junior",9,"Q20"
+"88","Partner or other significant person has moved in with me, 
+ but has career problems","Women","Senior",2,"Q20"
+"89","Children moved with none or 
+ minimum adverse effects","Men","Junior",1,"Q20"
+"90","Children moved with none or 
+ minimum adverse effects","Men","Senior",6,"Q20"
+"91","Children moved with none or 
+ minimum adverse effects","Women","Junior",4,"Q20"
+"92","Children moved with none or 
+ minimum adverse effects","Women","Senior",11,"Q20"
+"93","Children didnt move","Men","Junior",0,"Q20"
+"94","Children didnt move","Men","Senior",0,"Q20"
+"95","Children didnt move","Women","Junior",1,"Q20"
+"96","Children didnt move","Women","Senior",1,"Q20"
+"97","Children moved but suffered 
+ significant adverse effects","Men","Junior",0,"Q20"
+"98","Children moved but suffered 
+ significant adverse effects","Men","Senior",1,"Q20"
+"99","Children moved but suffered 
+ significant adverse effects","Women","Junior",0,"Q20"
+"100","Children moved but suffered 
+ significant adverse effects","Women","Senior",4,"Q20"
+"101","Not applicable","Men","Junior",16,"Q20"
+"102","Not applicable","Men","Senior",18,"Q20"
+"103","Not applicable","Women","Junior",78,"Q20"
+"104","Not applicable","Women","Senior",45,"Q20"
+"105","Didnt answer","Men","Junior",0,"Q20"
+"106","Didnt answer","Men","Senior",0,"Q20"
+"107","Didnt answer","Women","Junior",0,"Q20"
+"108","Didnt answer","Women","Senior",0,"Q20"
+"109","Men are easily selected 
+ for leadership positions","Men","Junior",4,"Q36"
+"110","Men are easily selected 
+ for leadership positions","Men","Senior",7,"Q36"
+"111","Men are easily selected 
+ for leadership positions","Women","Junior",47,"Q36"
+"112","Men are easily selected 
+ for leadership positions","Women","Senior",16,"Q36"
+"113","Men outnumber women 
+ in my department","Men","Junior",11,"Q36"
+"114","Men outnumber women 
+ in my department","Men","Senior",25,"Q36"
+"115","Men outnumber women 
+ in my department","Women","Junior",68,"Q36"
+"116","Men outnumber women 
+ in my department","Women","Senior",34,"Q36"
+"117","Women outnumber men 
+ in my department","Men","Junior",9,"Q36"
+"118","Women outnumber men 
+ in my department","Men","Senior",5,"Q36"
+"119","Women outnumber men 
+ in my department","Women","Junior",29,"Q36"
+"120","Women outnumber men 
+ in my department","Women","Senior",17,"Q36"
+"121","Women are easily selected 
+ for leadership positions","Men","Junior",3,"Q36"
+"122","Women are easily selected 
+ for leadership positions","Men","Senior",2,"Q36"
+"123","Women are easily selected 
+ for leadership positions","Women","Junior",6,"Q36"
+"124","Women are easily selected 
+ for leadership positions","Women","Senior",12,"Q36"
+"125","No gender-based leadership","Men","Junior",11,"Q36"
+"126","No gender-based leadership","Men","Senior",22,"Q36"
+"127","No gender-based leadership","Women","Junior",15,"Q36"
+"128","No gender-based leadership","Women","Senior",14,"Q36"
+"129","No gender disparity","Men","Junior",8,"Q36"
+"130","No gender disparity","Men","Senior",6,"Q36"
+"131","No gender disparity","Women","Junior",16,"Q36"
+"132","No gender disparity","Women","Senior",14,"Q36"
+"133","Not applicable","Men","Junior",3,"Q36"
+"134","Not applicable","Men","Senior",1,"Q36"
+"135","Not applicable","Women","Junior",11,"Q36"
+"136","Not applicable","Women","Senior",4,"Q36"
+"137","Didnt answer","Men","Junior",0,"Q36"
+"138","Didnt answer","Men","Senior",0,"Q36"
+"139","Didnt answer","Women","Junior",5,"Q36"
+"140","Didnt answer","Women","Senior",1,"Q36"
+"141","A man ever took credit for your work","Men","Junior",3,"Q38"
+"142","A man ever took credit for your work","Men","Senior",2,"Q38"
+"143","A man ever took credit for your work","Women","Junior",58,"Q38"
+"144","A man ever took credit for your work","Women","Senior",35,"Q38"
+"145","Havent experienced any of the situations","Men","Junior",8,"Q38"
+"146","Havent experienced any of the situations","Men","Senior",11,"Q38"
+"147","Havent experienced any of the situations","Women","Junior",14,"Q38"
+"148","Havent experienced any of the situations","Women","Senior",10,"Q38"
+"149","Not applicable","Men","Junior",17,"Q38"
+"150","Not applicable","Men","Senior",21,"Q38"
+"151","Not applicable","Women","Junior",0,"Q38"
+"152","Not applicable","Women","Senior",1,"Q38"
+"153","Didnt answer","Men","Junior",0,"Q38"
+"154","Didnt answer","Men","Senior",1,"Q38"
+"155","Didnt answer","Women","Junior",0,"Q38"
+"156","Didnt answer","Women","Senior",0,"Q38"
+"157","Perceived as aggressive or unpleasant 
+ for exercising authority","Men","Junior",2,"Q38"
+"158","Perceived as aggressive or unpleasant 
+ for exercising authority","Men","Senior",3,"Q38"
+"159","Perceived as aggressive or unpleasant 
+ for exercising authority","Women","Junior",69,"Q38"
+"160","Perceived as aggressive or unpleasant 
+ for exercising authority","Women","Senior",44,"Q38"
+"161","Being subjected to gender-based jokes","Men","Junior",0,"Q38"
+"162","Being subjected to gender-based jokes","Men","Senior",1,"Q38"
+"163","Being subjected to gender-based jokes","Women","Junior",94,"Q38"
+"164","Being subjected to gender-based jokes","Women","Senior",42,"Q38"
+"165","Loss of promotion/grant for a men","Men","Junior",0,"Q38"
+"166","Loss of promotion/grant for a men","Men","Senior",1,"Q38"
+"167","Loss of promotion/grant for a men","Women","Junior",17,"Q38"
+"168","Loss of promotion/grant for a men","Women","Senior",18,"Q38"
+"169","Career advancement influenced 
+ by your gender","Men","Junior",0,"Q38"
+"170","Career advancement influenced 
+ by your gender","Men","Senior",0,"Q38"
+"171","Career advancement influenced 
+ by your gender","Women","Junior",30,"Q38"
+"172","Career advancement influenced 
+ by your gender","Women","Senior",18,"Q38"
+"173","Field recruitment influenced by your Gender","Men","Junior",1,"Q38"
+"174","Field recruitment influenced by your Gender","Men","Senior",1,"Q38"
+"175","Field recruitment influenced by your Gender","Women","Junior",58,"Q38"
+"176","Field recruitment influenced by your Gender","Women","Senior",22,"Q38"
+"177","Opinion acceptance influenced by gender","Men","Junior",1,"Q38"
+"178","Opinion acceptance influenced by gender","Men","Senior",1,"Q38"
+"179","Opinion acceptance influenced by gender","Women","Junior",70,"Q38"
+"180","Opinion acceptance influenced by gender","Women","Senior",40,"Q38"
+"181","Discrimination on the basis of pregnancy","Men","Junior",0,"Q38"
+"182","Discrimination on the basis of pregnancy","Men","Senior",0,"Q38"
+"183","Discrimination on the basis of pregnancy","Women","Junior",29,"Q38"
+"184","Discrimination on the basis of pregnancy","Women","Senior",23,"Q38"
+"185","The harasser has been exposed 
+ with consequences","Men","Junior",0,"Q40"
+"186","The harasser has been exposed 
+ with consequences","Men","Senior",0,"Q40"
+"187","The harasser has been exposed 
+ with consequences","Women","Junior",2,"Q40"
+"188","The harasser has been exposed 
+ with consequences","Women","Senior",0,"Q40"
+"189","The harasser has been exposed 
+ with no consequences","Men","Junior",0,"Q40"
+"190","The harasser has been exposed 
+ with no consequences","Men","Senior",0,"Q40"
+"191","The harasser has been exposed 
+ with no consequences","Women","Junior",8,"Q40"
+"192","The harasser has been exposed 
+ with no consequences","Women","Senior",3,"Q40"
+"193","The situation led to my resignation","Men","Junior",2,"Q40"
+"194","The situation led to my resignation","Men","Senior",0,"Q40"
+"195","The situation led to my resignation","Women","Junior",2,"Q40"
+"196","The situation led to my resignation","Women","Senior",2,"Q40"
+"197","The situation led to the harasser resignation","Men","Junior",0,"Q40"
+"198","The situation led to the harasser resignation","Men","Senior",0,"Q40"
+"199","The situation led to the harasser resignation","Women","Junior",0,"Q40"
+"200","The situation led to the harasser resignation","Women","Senior",0,"Q40"
+"201","The situation was not exposed","Men","Junior",2,"Q40"
+"202","The situation was not exposed","Men","Senior",1,"Q40"
+"203","The situation was not exposed","Women","Junior",35,"Q40"
+"204","The situation was not exposed","Women","Senior",21,"Q40"
+"205","Not applicable","Men","Junior",26,"Q40"
+"206","Not applicable","Men","Senior",33,"Q40"
+"207","Not applicable","Women","Junior",87,"Q40"
+"208","Not applicable","Women","Senior",47,"Q40"
+"209","The harasser was my supervisor","Men","Junior",0,"Q40"
+"210","The harasser was my supervisor","Men","Senior",0,"Q40"
+"211","The harasser was my supervisor","Women","Junior",15,"Q40"
+"212","The harasser was my supervisor","Women","Senior",14,"Q40"
+"213","Didnt answer","Men","Junior",1,"Q40"
+"214","Didnt answer","Men","Senior",1,"Q40"
+"215","Didnt answer","Women","Junior",1,"Q40"
+"216","Didnt answer","Women","Senior",3,"Q40"
+"217","Coerced not to disclose the situation","Men","Junior",0,"Q40"
+"218","Coerced not to disclose the situation","Men","Senior",0,"Q40"
+"219","Coerced not to disclose the situation","Women","Junior",8,"Q40"
+"220","Coerced not to disclose the situation","Women","Senior",1,"Q40"
+"221","Providing an educational experience","Men","Junior",12,"Q44"
+"222","Providing an educational experience","Men","Senior",26,"Q44"
+"223","Providing an educational experience","Women","Junior",38,"Q44"
+"224","Providing an educational experience","Women","Senior",30,"Q44"
+"225","Company","Men","Junior",11,"Q44"
+"226","Company","Men","Senior",9,"Q44"
+"227","Company","Women","Junior",52,"Q44"
+"228","Company","Women","Senior",17,"Q44"
+"229","Not applicable","Men","Junior",3,"Q44"
+"230","Not applicable","Men","Senior",2,"Q44"
+"231","Not applicable","Women","Junior",7,"Q44"
+"232","Not applicable","Women","Senior",0,"Q44"
+"233","Didnt answer","Men","Junior",3,"Q44"
+"234","Didnt answer","Men","Senior",0,"Q44"
+"235","Didnt answer","Women","Junior",12,"Q44"
+"236","Didnt answer","Women","Senior",3,"Q44"
+"237","Concerns about personal safety","Men","Junior",10,"Q44"
+"238","Concerns about personal safety","Men","Senior",10,"Q44"
+"239","Concerns about personal safety","Women","Junior",83,"Q44"
+"240","Concerns about personal safety","Women","Senior",42,"Q44"
+"241","Amount of work required assistance","Men","Junior",24,"Q44"
+"242","Amount of work required assistance","Men","Senior",34,"Q44"
+"243","Amount of work required assistance","Women","Junior",98,"Q44"
+"244","Amount of work required assistance","Women","Senior",64,"Q44"
