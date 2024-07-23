@@ -455,7 +455,7 @@ unique(Q$p_valueChi)
 
 # Chi-square values - senior
 Q<-combined_c_status %>% 
-  filter(Group_time2 =="Junior") %>% 
+  filter(Group_time2 =="Senior") %>% 
   filter(Question == 'Q61')
 unique(Q$chi_stat)
 unique(Q$p_valueChi)
