@@ -23,10 +23,22 @@ Q_45_55_unite2 <- read.csv("./Results/Q_45_55_unite2.csv")
 
 # Organize data - remove non representative variables and with less than 5 answers
 Join_Count_Qf <- Join_Count_Q %>% 
-  filter(!Category %in% c("Didnt   answer",  "Didnt \n answer"))
+  filter(!Category %in% c("Didnt   answer",  "Didnt \n answer")) %>% 
+  ungroup()
 
 Join_Sum_Qf <- Join_Sum_Q %>% 
-filter(!Category %in% c("Retired", "Didnt answer", "End of temporary contract", "Fired from my last job", "Less focus on research", "Not applicable", "Work security", "Children didnt move", "Children moved but suffered   significant adverse effects", "Partner or significant other hasnt moved in with me,   but with significant negative effects on the relationship"))
+filter(!Category %in% c("Retired", "Didnt answer", "End of temporary contract", "Fired from my last job", "Less focus on research", "Not applicable", "Work security", "Children didnt move", "Children moved but suffered   significant adverse effects", "Partner or significant other hasnt moved in with me,   but with significant negative effects on the relationship")) %>% 
+  ungroup()
+
+str(Join_Count_Qf)
+unique(Join_Count_Qf$Category)
+
+Join_Count_Qf <- Join_Count_Qf %>% 
+  mutate(Category = case_when(Category == "2-2.9" ~ "1-3.9",
+                              Category == "3-3.9"  ~ "1-3.9",
+                              Category == "1-1.9"  ~ "1-3.9",
+                              .default = as.character(Category)))
+
 
 ########## Analyse "Q33" "Q34" "Q39" "Q41" "Q57" "Q58" "Q60" "Q61" #############
 # by gender - count
@@ -230,16 +242,19 @@ write.csv(combined_s_status, "./Results/combined_s_status.csv")
 
 ############################ Analyse  Q45-55 ###################################
 # by gender - Q45-55 
-questions <- unique(Q_45_55_unite2$Influence)
+questions <- unique(Q_45_55_unite2$Type)
 combined_Influence_gender <- data.frame(NULL)
 
 for (q in questions) {
   
   reshaped_df <- Q_45_55_unite2 %>%
-    filter(Influence == q) %>% 
-    group_by(Group_gender, Type) %>%
+    filter(Type == q) %>% 
+    group_by(Group_gender, Influence) %>%
     summarize(Count = sum(Count)) %>%
-    spread(key = Type, value = Count, fill = 0) %>% 
+    mutate(Proportion = case_when(Group_gender == "Women" ~ (Count/215)*100,
+                                  Group_gender == "Men" ~ (Count/68)*100)) %>% 
+    select(Group_gender, Influence, Proportion) %>% 
+    spread(key = Influence, value = Proportion, fill = 0) %>% 
     ungroup()
   
   # Convert to matrix 
@@ -261,13 +276,13 @@ for (q in questions) {
   df <- result_matrix %>%
     as.data.frame() %>%
     rownames_to_column(var = "Group_gender") %>%
-    gather(key = "Type", value = "Frequency", -Group_gender) %>% 
+    gather(key = "Influence", value = "Frequency", -Group_gender) %>% 
     mutate(Proportion = case_when(Group_gender == "Women" ~ Frequency/rs["Women"],
                                   Group_gender == "Men" ~ Frequency/rs["Men"]),
            p_value_F = p_value20F,
            chi_stat = chi_square,
            p_valueChi=p_value20C,
-           Influence = q)
+           Type = q)
   
   combined_Influence_gender <- rbind(combined_Influence_gender, df)                      
   
@@ -280,7 +295,7 @@ write.csv(combined_Influence_gender, "./Results/combined_Influence_gender.csv")
 
 Status<-unique(Q_45_55_unite2$Group_time2)
 
-questions <- unique(Q_45_55_unite2$Influence)
+questions <- unique(Q_45_55_unite2$Type)
 
 combined_Influence_status <- data.frame(NULL)
 
@@ -288,11 +303,14 @@ for (q in questions) {
   for (i in Status) {
     
     reshaped_df <- Q_45_55_unite2 %>% 
-      filter(Influence == q) %>% 
+      filter(Type == q) %>% 
       filter(Group_time2 == i) %>% 
-      group_by(Group_gender, Type) %>%
+      group_by(Group_gender, Influence) %>%
       summarize(Count = sum(Count)) %>%
-      spread(key = Type, value = Count, fill = 0) %>% 
+      mutate(Proportion = case_when(Group_gender == "Women" ~ (Count/215)*100,
+                                   Group_gender == "Men" ~ (Count/68)*100)) %>% 
+      select(Group_gender, Influence, Proportion) %>%
+      spread(key = Influence, value = Proportion, fill = 0) %>% 
       ungroup()
     
     result_matrix <- as.matrix(reshaped_df %>%
@@ -313,14 +331,14 @@ for (q in questions) {
     df <- result_matrix %>%
       as.data.frame() %>% 
       rownames_to_column(var = "Group_gender") %>% 
-      gather(key = "Type",value = "Frequency", -Group_gender) %>% 
+      gather(key = "Influence",value = "Frequency", -Group_gender) %>% 
       mutate(Proportion = case_when(Group_gender == "Women" ~ Frequency/rs["Women"],
                                     Group_gender == "Men" ~ Frequency/rs["Men"]),
              p_value_F = p_valueswF,
              chi_stat = chi_square,
              p_valueChi= p_valueswC,
              Group_time2 = i,
-             Influence = q)
+             Type = q)
     
     combined_Influence_status <- rbind(combined_Influence_status, df)
   }
@@ -391,10 +409,11 @@ Q<-combined_s_gender %>%
 
 unique(Q$chi_stat)
 unique(Q$p_valueChi)
+str(combined_s_gender)
 
 # Plot the data sum
 P <- combined_s_gender %>% 
-  filter(Question == 'Q44') %>%
+  filter(Question == 'Q40') %>%
   ggplot(aes(x = reorder(Category, Proportion), y = Proportion, fill = Group_gender)) +
   geom_bar(stat = "identity", position = "dodge") +
   facet_wrap(~ Group_gender, scales = "free") +
@@ -415,9 +434,10 @@ P <- combined_s_gender %>%
   coord_flip()
 P
 
+35
 #Chi-square values - count questions
 Q<-combined_c_gender %>% 
-  filter(Question == 'Q61')
+  filter(Question == 'Q60')
 unique(Q$chi_stat)
 unique(Q$p_valueChi)
 
@@ -449,18 +469,39 @@ P
 
 Q<-combined_c_status %>% 
   filter(Group_time2 =="Junior") %>% 
-  filter(Question == 'Q61')
+  filter(Question == 'Q57')
 unique(Q$chi_stat)
 unique(Q$p_valueChi)
 
 # Chi-square values - senior
 Q<-combined_c_status %>% 
-  filter(Group_time2 =="Senior") %>% 
-  filter(Question == 'Q61')
+  filter(Group_time2 =="Junior") %>% 
+  filter(Question == 'Q57')
 unique(Q$chi_stat)
 unique(Q$p_valueChi)
 
 # Plot data
+
+M <- combined_s_status %>% 
+  filter(Question == "Q19") %>% 
+  ggplot(aes(x = reorder(Category, Proportion), y = Proportion, fill = Group_gender)) +
+  geom_bar(stat = "identity", position = "stack") +
+  facet_wrap(~ Group_time2, scales = "free") +
+  labs(title = "",
+       x = " ",
+       y = "Proportion") +
+  theme_minimal()+
+  theme(legend.position = "bottom",
+        axis.title.y = element_blank(),
+        axis.text.y = element_text(family = "serif", size = 12),
+        axis.text.x = element_text(family = "serif", size = 12),
+        axis.title.x = element_text(family = "serif", size = 12),
+        title = element_text(family = "serif", size = 14, face = "bold"))+
+  geom_text(aes(label = paste0(round(100 * Proportion, 1), "%")), size = 3,
+            position = position_stack(vjust = 0.5),
+            inherit.aes = TRUE)+
+  coord_flip()
+M
 
 M <- combined_c_status %>% 
   filter(Question == "Q57") %>% 
@@ -482,3 +523,4 @@ M <- combined_c_status %>%
             inherit.aes = TRUE)+
   coord_flip()
 M
+
