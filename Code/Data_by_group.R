@@ -700,6 +700,7 @@ Q_38_Influence$Influence <- factor(Q_45_55_unite2$Influence, levels = c("Big Acc
 Q_38_Influence$Type <- factor(Q_45_55_unite2$Type, levels = c("Ethnicity", "Age", "Geographical origin", "Teaching responsibilities", "Administrative responsibilities", "Gender discrimination", "Lack of job security", "Socioeconomic level", "Family responsibilities", "Lack of resources", "Lack of funding"))
 
 ## Clean data and rename columns ----
+
 data_cleaned <- data_geral_af %>% 
   select(- c("Carimbo de data/hora", "Carimbo de data", "Q6_Qual é a sua idade?", "Q8_Qualéoseuestadodeorigem?", "Q12_Emqualestadovocêresideatualmente?","Q27_Há quanto tempo você está na situação acima?",  "Q29_Qual é a sua renda mensal? (em real)" , "Q36_Há mais homens que mulheres em meu departamento":"Q36_Não se aplica", "Q38_Algum homem já levou o crédito pelo trabalho feito por você":"Q38_Prefiro não responder", "Q40_A situação foi exposta e a pessoa sofreu as devidas consequências":"Q40_Não se aplica", "Q43_Não se aplica":"Q43_Prefiro não responder", "Q56_Qual é a sua MÉDIA/ANO de produção científica (artigos, capítulos de livros, livros), nos últimos 4 anos, ou seja, de 2019 até o momento?", "Group_time", "case_when(...)")) %>% 
   dplyr::rename("COD_ID" = "ID",
@@ -764,7 +765,8 @@ data_cleaned <- data_geral_af %>%
   )
 str(data_cleaned)
 
-write.csv(data_cleaned,"./Results/data_cleaned.csv")
+write.csv(data_cleaned,"./Data/data_cleaned.csv")
+write.csv(data_geral_af, "./Data/data_geral_af.csv")
 
 # Prepare single-choice data for analysis ----
 
@@ -834,6 +836,6 @@ Join_Count_Q <- output_Q26 %>%
  full_join(output_Q42) %>% 
  full_join(output_Q43)
 
-write.csv(Join_Count_Q, "./Results/Join_Count_Q.csv") 
-write.csv(Join_Sum_Q, "./Results/Join_Sum_Q.csv") 
-write.csv(Q_38_Influence,"./Results/Q_38_Influence.csv") 
+write.csv(Join_Count_Q, "./Data/Join_Count_Q.csv")
+write.csv(Join_Sum_Q, "./Data/Join_Sum_Q.csv") 
+write.csv(Q_38_Influence,"./Data/Q_38_Influence.csv") 
