@@ -442,7 +442,7 @@ Join_Sum_Q <- data_geral_19sum %>%
  full_join(data_44sum) %>% 
   full_join(data_63sum)
 
-# Translating and cleaning data of one-choice questions ----
+# Translating and cleaning data of single-choice questions ----
 ## Q4 identity ----
 data_geral_af = data_geral_af %>% 
  mutate(`Q4_Como você se identifica?`= recode(`Q4_Como você se identifica?`, 'Amarela' = "Asian"),

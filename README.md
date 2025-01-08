@@ -8,11 +8,16 @@ Chi-tests.R - analysis of relevant questions based on paper goals
 Data_by_group.R - organizing and pre-visualizing data 
 
 ## Data:
-Join and unite data set - data gathered for chi-square analysis
 
-data_geral_af.csv - Data organized in Data_by_group script
+respostas_cleaned_final.xlsx - all questionnaire answers - without filtering
 
-respostas_cleaned_final.xlsx - all questionnaire answers - already cleaned 
+data_cleaned.csv - data organized, translated and filtered with only answers gathered in scientific institutions
+
+Join_Count_Q.csv - single-choice questions data for chi-square test
+
+Join_Sum_Q.csv - multiple-choice questions data for chi-square test
+
+Q_38_Influence.csv - Factor influencing productivity data for chi-square test
 
 ## Results:
 
