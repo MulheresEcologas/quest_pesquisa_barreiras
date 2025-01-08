@@ -5,7 +5,7 @@ Paper: Challenges Faced in Ecological Sciences Careers: A Case Study of Gender P
 ## Code:
 Chi-tests.R - analysis of relevant questions based on paper goals
 
-Data_by_group.R - organizing and pre-visualizing data 
+Data_by_group.R - data wrangling
 
 ## Data:
 
