@@ -494,6 +494,20 @@ data_geral_af<- data_geral_af %>%
 
 unique(data_geral_af$`Q13_Emqualestadovocêresideatualmente?`)
 
+## Q18 live where work ----
+data_geral_af<- data_geral_af %>% 
+  mutate(`Q28_Qual é a sua renda mensal?` = 
+           recode(`Q28_Qual é a sua renda mensal?`,
+                  "1 a 2 salários mínimos" = "1-2 minimum salary",
+                  "2 a 3 salários mínimos" = "2-3 minimum salary",
+                  "Mais que 10 salários mínimos" = ">10 minimum salary",
+                  "Mais que 5 salários mínimos" = ">5 minimum salary",
+                  "3 a 5 salários mínimos" = "3-5 minimum salary",
+                  "Prefiro não responder" = "Didnt answer",
+                  .default = as.character(`Q28_Qual é a sua renda mensal?`)))
+
+unique(data_geral_af$`Q28_Qual é a sua renda mensal?`)
+
 ## Q28 income ----
 data_geral_af<- data_geral_af %>% 
  mutate(`Q28_Qual é a sua renda mensal?` = 
@@ -507,6 +521,17 @@ data_geral_af<- data_geral_af %>%
                  .default = as.character(`Q28_Qual é a sua renda mensal?`)))
 
 unique(data_geral_af$`Q28_Qual é a sua renda mensal?`)
+
+## Q30 job institution ----
+data_geral_af = data_geral_af %>% 
+  mutate(`Q31_Você possui mais de uma fonte de renda?`= 
+           recode(`Q31_Você possui mais de uma fonte de renda?`,
+                  'Sim' = "Yes", 
+                  'Não' = "No",
+                  "Prefiro não responder" = "Didnt answer",
+                  .default = as.character(`Q31_Você possui mais de uma fonte de renda?`)))
+
+unique(data_geral_af$`Q31_Você possui mais de uma fonte de renda?`)
 
 ## Q31 more than one job ----
 data_geral_af = data_geral_af %>% 
@@ -542,6 +567,16 @@ data_geral_af = data_geral_af %>%
 
 unique(data_geral_af$`Q34_Colegas que mais auxiliam em sua posição atual são principalmente:`)
 
+## Q37 gender-related  ----
+data_geral_af = data_geral_af %>% 
+  mutate(`Question_39_Você já sofreu assédio sexual por algum colega de trabalho?`= 
+           recode(`Question_39_Você já sofreu assédio sexual por algum colega de trabalho?`, 'Sim' = "Yes",
+                  'Não' = "No",
+                  'Prefiro não responder' = "Didnt answer",
+                  .default = as.character(`Question_39_Você já sofreu assédio sexual por algum colega de trabalho?`))) 
+
+unique(data_geral_af$`Question_39_Você já sofreu assédio sexual por algum colega de trabalho?`)
+
 ## Q39 % sexual harassment ----
 data_geral_af = data_geral_af %>% 
  mutate(`Question_39_Você já sofreu assédio sexual por algum colega de trabalho?`= 
@@ -551,6 +586,17 @@ data_geral_af = data_geral_af %>%
                  .default = as.character(`Question_39_Você já sofreu assédio sexual por algum colega de trabalho?`))) 
 
 unique(data_geral_af$`Question_39_Você já sofreu assédio sexual por algum colega de trabalho?`)
+
+## Q41 master/phd advisor  ----
+data_geral_af = data_geral_af %>% 
+  mutate(`Q41_Se você fez pós-graduação (ex: especialização, mestrado ou doutorado), a pessoa que te orientou por último foi:`= 
+           recode(`Q41_Se você fez pós-graduação (ex: especialização, mestrado ou doutorado), a pessoa que te orientou por último foi:`,
+                  'Mulher' = "Women",
+                  'Homem' = "Men",
+                  'Prefiro não responder' = "Didnt answer",
+                  .default = as.character(`Q41_Se você fez pós-graduação (ex: especialização, mestrado ou doutorado), a pessoa que te orientou por último foi:`))) 
+
+unique(data_geral_af$`Q41_Se você fez pós-graduação (ex: especialização, mestrado ou doutorado), a pessoa que te orientou por último foi:`)
 
 ## Q42  postgraduate program ----
 data_geral_af = data_geral_af %>% 
@@ -597,7 +643,18 @@ data_geral_af = data_geral_af %>%
 
 unique(data_geral_af$`Q60_Sua escolha profissional influencia a sua vontade de ter filhos(as)?`)
 
-## Q64 How do you see their career ----
+## Q61 - maternity leave ----
+data_geral_af = data_geral_af %>% 
+  mutate(`Q61_Você acha que a licença maternidade pode impactar negativamente na profissão das mulheres?`= 
+           recode(`Q61_Você acha que a licença maternidade pode impactar negativamente na profissão das mulheres?`,
+                  'Sim' = "Yes",
+                  'Não' = "No",
+                  'Prefiro não responder' = "Didnt answer",
+                  .default = as.character(`Q61_Você acha que a licença maternidade pode impactar negativamente na profissão das mulheres?`)))
+
+unique(data_geral_af$`Q61_Você acha que a licença maternidade pode impactar negativamente na profissão das mulheres?`)
+
+## Q64 How do you see your personal life ----
 
 data_geral_af = data_geral_af %>% 
  mutate(`Q64_Como você classifica a sua vida pessoal neste momento?`= 
@@ -610,6 +667,18 @@ data_geral_af = data_geral_af %>%
                  .default = as.character(`Q64_Como você classifica a sua vida pessoal neste momento?`)))
 
 unique(data_geral_af$`Q64_Como você classifica a sua vida pessoal neste momento?`)
+
+## Q64 sucessfull in ecology career ----
+
+data_geral_af = data_geral_af %>% 
+  mutate(`Q64_Você vê uma carreira de sucesso como profissional no ramo da Ecologia?`= 
+           recode(`Q64_Você vê uma carreira de sucesso como profissional no ramo da Ecologia?`,
+                  'Sim' = "Yes",
+                  'Não' = "No",
+                  'Prefiro não responder' = "Didnt answer",
+                  .default = as.character(`Q64_Você vê uma carreira de sucesso como profissional no ramo da Ecologia?`)))
+
+unique(data_geral_af$`Q64_Você vê uma carreira de sucesso como profissional no ramo da Ecologia?`)
 
 ## Q- 45 a 55 - Productivity and Career Factors ----
 ### Summarize data of each factor ----
