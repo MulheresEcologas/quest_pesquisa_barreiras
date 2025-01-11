@@ -13,13 +13,9 @@ library(ggrepel)
 
 # Load data from Google Forms csv. ----
 data_geral <- readxl::read_xlsx("./Data/respostas_cleaned_final.xlsx")
-data_matrix <- read.csv("C:/Users/anapa/OneDrive/Desktop/Nuvem/Projetos/Mulheres na Ecologia/Análises_Artigo_MEco/data_matrix.csv")
+data_matrix <- read.csv("./Data/data_matrix.csv")
 colnames(data_geral)
 colnames(data_matrix)
-
-data_matrix = data_matrix %>% 
- dplyr::rename("Carimbo de data/hora"= "Carimbo.de.data.hora.x",
-        "Carimbo de data" = "Carimbo.de.data.x")
 
 # Grouping and filtering data ----
 ## First group category: by gender ----
@@ -124,7 +120,7 @@ data_matrix <- full_join(data_matrix, data_group) %>%
 
 ### Q19 Main factors that lead you to move ----
 data_geral_19 <- data_matrix %>% 
- gather('Category', 'Q_19_Answer', 9:24) %>% 
+ gather('Category', 'Q_19_Answer', 4:19) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_19_Answer')
  
 data_geral_19sum <- data_geral_19 %>% 
@@ -134,22 +130,22 @@ data_geral_19sum <- data_geral_19 %>%
 
 data_geral_19sum = data_geral_19sum %>% 
  mutate(
-  Category= recode(Category, "Acabou.o.contrato.como.professor.a..temporária" = "End of temporary contract"),
-  Category= recode(Category, "Aposentada..o.e." = 'Retired'), 
-  Category= recode(Category, "Aumento.significativo.no.meu.cargo.e.ou.salário" = 'Better salary'), 
-  Category= recode(Category,"Começou.o.contrato.como.professor.a..temporária.professora.efetiva" = 'Starting a temporary or permanent contract'),
-  Category= recode(Category,"Demitida..o.e..do.último.emprego" = 'Fired from my last job'),
-  Category= recode(Category,"Escolha.de.programa.de.pós.graduação" = 'Postgraduate programme preference'),
-  Category= recode(Category,"Maior.prestígio.do.trabalho" = "Increased status at work"),
-  Category= recode(Category,"Maior.segurança.no.trabalho" = 'Work security'),
-  Category= recode(Category,"Maior.ênfase.na.pesquisa" = 'Focus on research'),
-  Category= recode(Category,"Melhor.qualidade.de.vida" = 'Better life quality'),
-  Category= recode(Category,"Morar.mais.perto.de.parentes.e.amigos" = 'Live close to family and friends'),
-  Category= recode(Category,"Ênfase.reduzida.na.pesquisa" = 'Less focus on research'),
-  Category= recode(Category,"Única.oferta.de.emprego.que.tive" = 'Only job offer that I had'),
-  Category= recode(Category,"Mudança.de.companheiro.a..outra.pessoa.significativa" = 'Relocating because my partner has moved'),
-  Category= recode(Category,"Não.se.aplica.x" = 'Not applicable'),
-  Category= recode(Category,"Prefiro.não.responder.x" = 'Didnt answer'))
+  Category= recode(Category, "Q19_Acabou.o.contrato.como.professor.a..temporária" = "End of temporary contract"),
+  Category= recode(Category, "Q19_Aposentada..o.e." = 'Retired'), 
+  Category= recode(Category, "Q19_Aumento.significativo.no.meu.cargo.e.ou.salário" = 'Better salary'), 
+  Category= recode(Category,"Q19_Começou.o.contrato.como.professor.a..temporária.professora.efetiva" = 'Starting a temporary or permanent contract'),
+  Category= recode(Category,"Q19_Demitida..o.e..do.último.emprego" = 'Fired from my last job'),
+  Category= recode(Category,"Q19_Escolha.de.programa.de.pós.graduação" = 'Postgraduate programme preference'),
+  Category= recode(Category,"Q19_Maior.prestígio.do.trabalho" = "Increased status at work"),
+  Category= recode(Category,"Q19_Maior.segurança.no.trabalho" = 'Work security'),
+  Category= recode(Category,"Q19_Maior.ênfase.na.pesquisa" = 'Focus on research'),
+  Category= recode(Category,"Q19_Melhor.qualidade.de.vida" = 'Better life quality'),
+  Category= recode(Category,"Q19_Morar.mais.perto.de.parentes.e.amigos" = 'Live close to family and friends'),
+  Category= recode(Category,"Q19_Ênfase.reduzida.na.pesquisa" = 'Less focus on research'),
+  Category= recode(Category,"Q19_Única.oferta.de.emprego.que.tive" = 'Only job offer that I had'),
+  Category= recode(Category,"Q19_Mudança.de.companheiro.a..outra.pessoa.significativa" = 'Relocating because my partner has moved'),
+  Category= recode(Category,"Q19_Não.se.aplica" = 'Not applicable'),
+  Category= recode(Category,"Q19_Prefiro.não.responder" = 'Didnt answer'))
 
 
 data_geral_19sum$Group_gender <- factor(data_geral_19sum$Group_gender, levels = c('Women', 'Men'))
@@ -158,26 +154,26 @@ data_geral_19sum$Category <- as.factor(data_geral_19sum$Category)
 
 ### Q20 Consequences of moving to advance your career ----
 data_geral_20 <- data_matrix %>% 
- gather('Category', 'Q_20_Answer', 26:36) %>% 
+ gather('Category', 'Q_20_Answer', 21:31) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_20_Answer') 
 
 data_geral_20sum <- data_geral_20 %>% 
  group_by(Category, Group_gender, Group_time2) %>%
- summarise(Sum = sum(Q_20_Answer))%>%
+ dplyr::summarise(Sum = sum(Q_20_Answer))%>%
  ungroup()
 
 data_geral_20sum = data_geral_20sum %>% mutate(
- Category= recode(Category, "Com.minha.família.de.origem.parentes..mãe.pai.irmã.o.tia.o.prima.o.etc..x" = "End of temporary contract"),
- Category= recode(Category, "Companheiro.a..outra.pessoa.não.se.mudou.mas.o.relacionamento.permaneceu.intacto" = 'Partner or significant other hasnt moved in with me, and the relationship had no significant negative effects'), 
- Category= recode(Category, "Companheiro.a..outra.pessoa.significativa.mudou.se.comigo.com.efeitos.negativos.mínimos.sobre.relação" = 'Partner or significant other has moved in with me, with no significant negative effects on the relationship'), 
- Category= recode(Category,"Companheiro.a..outra.pessoa.significativa.não.se.mudou.comigo.e.o.relacionamento.sofreu.efeitos.adversos" = 'Partner or significant other has moved in with me, and the relationship had significant negative effects'),
- Category= recode(Category,"Companheiro.a..outra.pessoa.significativa.se.mudou.comigo.mas.com.efeitos.negativos.significativos.no.relacionamento" = 'Partner or significant other hasnt moved in with me, but with significant negative effects on the relationship'),
- Category= recode(Category,"Companheiro.a..outra.pessoa.significativa.se.mudou.comigo.mas.com.problemas.significativos.na.carreira.do.cônjuge.outra.pessoa.significativa" = 'Partner or other significant person has moved in with me, but has career problems'),
- Category= recode(Category,"Filhos.mudaram.com.nenhum.ou.mínimos.efeitos.negativos" = "Children moved with none or minimum adverse effects"),
- Category= recode(Category,"Filhos.não.se.mudaram" = 'Children didnt move'),
+ Category= recode(Category, "Q20_Com.minha.família.de.origem.parentes..mãe.pai.irmã.o.tia.o.prima.o.etc..x" = "End of temporary contract"),
+ Category= recode(Category, "Q20_Companheiro.a..outra.pessoa.não.se.mudou.mas.o.relacionamento.permaneceu.intacto" = 'Partner or significant other hasnt moved in with me, and the relationship had no significant negative effects'), 
+ Category= recode(Category, "Q20_Companheiro.a..outra.pessoa.significativa.mudou.se.comigo.com.efeitos.negativos.mínimos.sobre.relação" = 'Partner or significant other has moved in with me, with no significant negative effects on the relationship'), 
+ Category= recode(Category,"Q20_Companheiro.a..outra.pessoa.significativa.não.se.mudou.comigo.e.o.relacionamento.sofreu.efeitos.adversos" = 'Partner or significant other has moved in with me, and the relationship had significant negative effects'),
+ Category= recode(Category,"Q20_Companheiro.a..outra.pessoa.significativa.se.mudou.comigo.mas.com.efeitos.negativos.significativos.no.relacionamento" = 'Partner or significant other hasnt moved in with me, but with significant negative effects on the relationship'),
+ Category= recode(Category,"Q20_Companheiro.a..outra.pessoa.significativa.se.mudou.comigo.mas.com.problemas.significativos.na.carreira.do.cônjuge.outra.pessoa.significativa" = 'Partner or other significant person has moved in with me, but has career problems'),
+ Category= recode(Category,"Q20_Filhos.mudaram.com.nenhum.ou.mínimos.efeitos.negativos" = "Children moved with none or minimum adverse effects"),
+ Category= recode(Category,"Q20_Filhos.não.se.mudaram" = 'Children didnt move'),
  Category= recode(Category,"Filhos.se.mudaram.mas.sofreram.efeitos.adversos.significativos" = 'Children moved but suffered significant adverse effects'),
- Category= recode(Category,"Não.se.aplica.y" = 'Not applicable'),
- Category= recode(Category,"Prefiro.não.responder.y" = 'Didnt answer'))
+ Category= recode(Category,"Q20_Não.se.aplica" = 'Not applicable'),
+ Category= recode(Category,"Q20_Prefiro.não.responder" = 'Didnt answer'))
 
 
 data_geral_20sum$Group_gender <- factor(data_geral_20sum$Group_gender, levels = c('Women', 'Men'))
@@ -186,7 +182,7 @@ data_geral_20sum$Category <- as.factor(data_geral_20sum$Category)
 
 ### Q21 with whom do you live? ----
 data_geral_21 <- data_matrix %>%
- gather('Category', 'Q_21_Answer', 38:44) %>% 
+ gather('Category', 'Q_21_Answer', 33:39) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_21_Answer')
 
 data_geral_21sum <- data_geral_21 %>% 
@@ -196,21 +192,22 @@ data_geral_21sum <- data_geral_21 %>%
 
 data_geral_21sum = data_geral_21sum %>% 
  mutate(
- Category= recode(Category, "Com.amiga.o.s..ou.colega.o.s." = "With friends and colegues"),
- Category= recode(Category, "Com.minha.família.de.origem.parentes..mãe.pai.irmã.o.tia.o.prima.o.etc..y" = 'With my original family'), 
- Category= recode(Category, "Com.minha.meu.companheira.o" = 'With my partner'), 
- Category= recode(Category,"Com.minha.s..meu.s..filha.s..filho.s." = 'With my children'),
- Category= recode(Category,"Em.república.pensionato.etc." = 'in a shared-flat or boarding house'),
- Category= recode(Category,"Sozinho.a." = 'Alone'),
- Category= recode(Category,"Prefiro.não.responder.x.x" = 'Didnt answer'))
+ Category= recode(Category, "Q21_Com.amiga.o.s..ou.colega.o.s." = "With friends and colegues"),
+ Category= recode(Category, "Q21_Com.minha.família.de.origem.parentes..mãe.pai.irmã.o.tia.o.prima.o.etc..y" = 'With my original family'), 
+ Category= recode(Category, "Q21_Com.minha.meu.companheira.o" = 'With my partner'), 
+ Category= recode(Category,"Q21_Com.minha.s..meu.s..filha.s..filho.s." = 'With my children'),
+ Category= recode(Category,"Q21_Em.república.pensionato.etc." = 'in a shared-flat or boarding house'),
+ Category= recode(Category,"Q21_Sozinho.a." = 'Alone'),
+ Category= recode(Category,"Q21_Prefiro.não.responder" = 'Didnt answer'))
 
 data_geral_21sum$Group_gender <- factor(data_geral_21sum$Group_gender, levels = c('Women', 'Men'))
 
 data_geral_21sum$Category <- as.factor(data_geral_21sum$Category)
+unique(data_geral_21sum$Category)
 
 ### Q22 housework ----
 data_geral_22 <- data_matrix %>%
- gather('Category', 'Q_22_Answer', 46:52) %>% 
+ gather('Category', 'Q_22_Answer', 41:47) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_22_Answer')
 
 data_geral_22sum <- data_geral_22 %>% 
@@ -220,47 +217,52 @@ data_geral_22sum <- data_geral_22 %>%
 
 data_geral_22sum = data_geral_22sum %>% 
  mutate(
- Category= recode(Category, "São.feitas.de.modo.colaborativo...todas.os..es..residentes.são.igualmente.responsáveis.x" = "All residents all equally responsable"),
- Category= recode(Category, "São.feitas.pelo.cônjuge.outra.pessoa.significativa.x" = 'They are done by my partner or other significannt person'), 
- Category= recode(Category, "São.feitas.por.crianças.x" = 'They are done by children'), 
- Category= recode(Category,"São.feitas.por.mim.x" = 'They are done by me'),
- Category= recode(Category,"São.feitas.por.outros.residentes.x" = 'They are done by other residents'),
- Category= recode(Category,"São.feitas.por.uma.ajuda.paga.x" = 'They are done by a paid help'),
- Category= recode(Category,"Prefiro.não.responder.y.y" = 'Didnt answer'))
+ Category= recode(Category, "Q22_São.feitas.de.modo.colaborativo...todas.os..es..residentes.são.igualmente.responsáveis" = "All residents all equally responsable"),
+ Category= recode(Category, "Q22_São.feitas.pelo.cônjuge.outra.pessoa.significativa" = 'They are done by my partner or other significannt person'), 
+ Category= recode(Category, "Q22_São.feitas.por.crianças" = 'They are done by children'), 
+ Category= recode(Category,"Q22_São.feitas.por.mim" = 'They are done by me'),
+ Category= recode(Category,"Q22_São.feitas.por.outros.residentes" = 'They are done by other residents'),
+ Category= recode(Category,"Q22_São.feitas.por.uma.ajuda.paga." = 'They are done by a paid help'),
+ Category= recode(Category,"Q22_Prefiro.não.responder" = 'Didnt answer'))
 
 data_geral_22sum$Group_gender <- factor(data_geral_22sum$Group_gender, levels = c('Women', 'Men'))
 
 data_geral_22sum$Category <- as.factor(data_geral_22sum$Category)
 
 ### Q24 ecology graduation ----
+colnames(data_matrix)
+
 data_geral_24 <- data_matrix %>%
- gather('Category', 'Q_24_Answer', 54:62) %>% 
- select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_24_Answer')
+ gather('Category', 'Q_24_Answer', 49:57) %>% 
+ select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_24_Answer') %>% 
+ na.omit()
 
 data_geral_24sum <- data_geral_24 %>% 
- group_by(Category, Group_gender, Group_time2) %>%
+ group_by(Group_gender, Group_time2, Category) %>%
  summarise(Sum = sum(Q_24_Answer))%>%
  ungroup()
 
 data_geral_24sum = data_geral_24sum %>% 
  mutate(
- Category= recode(Category, "TCC.na.área.de.ecologia" = "Undergraduate thesis in ecology"),
- Category= recode(Category, "Mestrado.na.área.de.ecologia..concluído.ou.em.andamento." = "Master's degree in ecology"), 
- Category= recode(Category, "Mestrado.em.área.correlata.com.dissertação.voltada.a.área.de.ecologia..concluído.ou.em.andamento." = "Master's degree with a dissertation focused on ecology"), 
- Category= recode(Category,"Doutorado.na.área.de.ecologia..concluído.ou.em.andamento." = "Doctorate in ecology"),
- Category= recode(Category,"Doutorado.em.área.correlata.com.tese.voltada.a.área.de.ecologia..concluído.ou.em.andamento." = "Doctorate with a thesis focused on ecology"),
- Category= recode(Category,"Especialização.em.ecologia..concluído.ou.em.andamento." = "Specialization in ecology"),
- Category= recode(Category,"Nenhuma.das.anteriores.mas.faço.pesquisa.na.área.de.ecologia" = "Conduct research in the field of ecology"),
- Category= recode(Category,"Nenhuma.das.anteriores.mas.possuo.emprego.não.acadêmico.na.área.de.ecologia" = "Have a non-academic job in ecology"),
- Category= recode(Category,"Prefiro.não.responder.x.x.x" = 'Didnt answer'))
+ Category= recode(Category, "Q24_TCC.na.área.de.ecologia" = "Undergraduate thesis in ecology"),
+ Category= recode(Category, "Q24_Mestrado.na.área.de.ecologia..concluído.ou.em.andamento." = "Master's degree in ecology"), 
+ Category= recode(Category, "Q24_Mestrado.em.área.correlata.com.dissertação.voltada.a.área.de.ecologia..concluído.ou.em.andamento." = "Master's degree with a dissertation focused on ecology"), 
+ Category= recode(Category,"Q24_Doutorado.na.área.de.ecologia..concluído.ou.em.andamento." = "Doctorate in ecology"),
+ Category= recode(Category,"Q24_Doutorado.em.área.correlata.com.tese.voltada.a.área.de.ecologia..concluído.ou.em.andamento." = "Doctorate with a thesis focused on ecology"),
+ Category= recode(Category,"Q24_Especialização.em.ecologia..concluído.ou.em.andamento." = "Specialization in ecology"),
+ Category= recode(Category,"Q24_Nenhuma.das.anteriores.mas.faço.pesquisa.na.área.de.ecologia" = "Conduct research in the field of ecology"),
+ Category= recode(Category,"Q24_Nenhuma.das.anteriores.mas.possuo.emprego.não.acadêmico.na.área.de.ecologia" = "Have a non-academic job in ecology"),
+ Category= recode(Category,"Q24_Prefiro.não.responder" = 'Didnt answer'))
 
 data_geral_24sum$Group_gender <- factor(data_geral_24sum$Group_gender, levels = c('Women', 'Men'))
 
 data_geral_24sum$Category <- as.factor(data_geral_24sum$Category)
 
+unique(data_geral_24sum$Category)
+
 ### Q35 hiring and promoting ----
 data_geral_35 <- data_matrix %>% 
- gather('Category', 'Q_35_Answer', 70:76) %>% 
+ gather('Category', 'Q_35_Answer', 59:65) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_35_Answer')
 
 data_35sum <- data_geral_35 %>% 
@@ -268,13 +270,13 @@ data_35sum <- data_geral_35 %>%
  summarise(Sum = sum(Q_35_Answer))
 
 data_35sum = data_35sum %>% mutate(
- Category= recode(Category, "Homens.não.são.facilmente.contratados.e.ou.promovidos" = "Men are not easily hired and/or promoted"),
- Category= recode(Category, "Homens.são.facilmente.contratados.e.ou.promovidos" = 'Men are easily hired and/or promoted'), 
- Category= recode(Category, "Mulheres.não.são.facilmente.contratadas.e.ou.promovidas" = 'Women are not easily hired and/or promoted'), 
- Category= recode(Category,"Mulheres.são.facilmente.contratadas.e.ou.promovidas" = 'Women are easily hired and/or promoted'),
- Category= recode(Category,"Não.há.distinção.entre.contratação.e.promoção.de.homens.e.mulheres" = 'No gender disparity in hiring and promotion'),
- Category= recode(Category,"Não.se.aplica.x.x" = 'Not applicable'),
- Category= recode(Category,"Prefiro.não.responder.y.y.y" = 'Didnt answer'))
+ Category= recode(Category, "Q35_Homens.não.são.facilmente.contratados.e.ou.promovidos" = "Men are not easily hired and/or promoted"),
+ Category= recode(Category, "Q35_Homens.são.facilmente.contratados.e.ou.promovidos" = 'Men are easily hired and/or promoted'), 
+ Category= recode(Category, "Q35_Mulheres.não.são.facilmente.contratadas.e.ou.promovidas" = 'Women are not easily hired and/or promoted'), 
+ Category= recode(Category,"Q35_Mulheres.são.facilmente.contratadas.e.ou.promovidas" = 'Women are easily hired and/or promoted'),
+ Category= recode(Category,"Q35_Não.há.distinção.entre.contratação.e.promoção.de.homens.e.mulheres" = 'No gender disparity in hiring and promotion'),
+ Category= recode(Category,"Q35_Não.se.aplica" = 'Not applicable'),
+ Category= recode(Category,"Q35_Prefiro.não.responder" = 'Didnt answer'))
 
 data_35sum$Group_gender <- factor(data_35sum$Group_gender, levels = c('Women', 'Men'))
 data_35sum$Category <- as.factor(data_35sum$Category)
@@ -371,7 +373,7 @@ data_43sum$Category <- factor(data_43sum$Category, levels = c('Didnt answer', 'N
 
 ### Q44 field work ----
 data_geral_44 <- data_matrix %>% 
- gather('Category', 'Q_44_Answer', 78:83) %>% 
+ gather('Category', 'Q_44_Answer', 67:72) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_44_Answer')
 
 data_44sum <- data_geral_44 %>% 
@@ -380,12 +382,12 @@ data_44sum <- data_geral_44 %>%
  summarise(Sum = sum(Q_44_Answer))
 
 data_44sum = data_44sum %>% mutate(
- Category= recode(Category, "Alternativa.para.proporcionar.experiência.educacional" = "Educational experience"),
- Category= recode(Category, "Companhia" = 'Company'), 
- Category= recode(Category, "Preocupações.com.a.segurança.pessoal" = 'Worried about personal security'),
- Category= recode(Category, "Quantidade.de.trabalho..sendo.necessária.assistência" = 'Amount of work'),
- Category= recode(Category,"Não.se.aplica.y.y" = 'Not applicable'),
- Category= recode(Category,"Prefiro.não.responder.x.x.x.x" = 'Didnt answer'))
+ Category= recode(Category, "Q44_Alternativa.para.proporcionar.experiência.educacional" = "Educational experience"),
+ Category= recode(Category, "Q44_Companhia" = 'Company'), 
+ Category= recode(Category, "Q44_Preocupações.com.a.segurança.pessoal" = 'Worried about personal security'),
+ Category= recode(Category, "Q44_Quantidade.de.trabalho..sendo.necessária.assistência" = 'Amount of work'),
+ Category= recode(Category,"Q44_Não.se.aplica" = 'Not applicable'),
+ Category= recode(Category,"Q44_Prefiro.não.responder" = 'Didnt answer'))
 
 data_44sum$Group_gender <- factor(data_44sum$Group_gender, levels = c('Women', 'Men'))
 
@@ -393,7 +395,7 @@ data_44sum$Category <- factor(data_44sum$Category, levels = c('Didnt answer', 'N
 
 ### Q63 children and field work ----
 data_geral_63 <- data_matrix %>% 
- gather('Category', 'Q_63_Answer', 87:94) %>% 
+ gather('Category', 'Q_63_Answer', 74:81) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_63_Answer')
 
 data_63sum <- data_geral_63 %>% 
@@ -402,14 +404,14 @@ data_63sum <- data_geral_63 %>%
  summarise(Sum = sum(Q_63_Answer))
 
 data_63sum = data_63sum %>% mutate(
- Category= recode(Category, "Companheiro.a..ou.cônjuge.cuida.da.s..criança.s..em.casa" = "Partner takes care of children at home"),
- Category= recode(Category, "Companheiro.a..ou.cônjuge.cuida.da.s..criança.s..no.campo" = "Partner takes care of children in the field"), 
- Category= recode(Category, "Enviei.a.s..criança.s..para.um.a..amigo.a..ou.alguém.da.minha.família.cuidar." = "I sent the children to a friend or family member"),
- Category= recode(Category, "Contratei.alguém.para.cuidar.da.s..criança.s..em.casa.ou.em.outro.lugar.que.não.seja.o.campo" = "I hired someone to take care of the children"),
- Category= recode(Category,"Não.tenho.filhos" = "I don't have children"),
- Category= recode(Category,"Trouxe.ou.contratei.alguém.para.cuidar.da.s..criança.s..no.campo" = "I brought/hired someone to take care of the children in the field"),
- Category= recode(Category,"Não.se.aplica" = 'Not applicable'),
- Category= recode(Category,"Prefiro.não.responder.y.y.y.y" = 'Didnt answer'))
+ Category= recode(Category, "Q63_Companheiro.a..ou.cônjuge.cuida.da.s..criança.s..em.casa" = "Partner takes care of children at home"),
+ Category= recode(Category, "Q63_Companheiro.a..ou.cônjuge.cuida.da.s..criança.s..no.campo" = "Partner takes care of children in the field"), 
+ Category= recode(Category, "Q63_Enviei.a.s..criança.s..para.um.a..amigo.a..ou.alguém.da.minha.família.cuidar." = "I sent the children to a friend or family member"),
+ Category= recode(Category, "Q63_Contratei.alguém.para.cuidar.da.s..criança.s..em.casa.ou.em.outro.lugar.que.não.seja.o.campo" = "I hired someone to take care of the children"),
+ Category= recode(Category,"Q63_Não.tenho.filhos" = "I don't have children"),
+ Category= recode(Category,"Q63_Trouxe.ou.contratei.alguém.para.cuidar.da.s..criança.s..no.campo" = "I brought/hired someone to take care of the children in the field"),
+ Category= recode(Category,"Q63_Não.se.aplica" = 'Not applicable'),
+ Category= recode(Category,"Q63_Prefiro.não.responder" = 'Didnt answer'))
 
 data_63sum$Group_gender <- factor(data_63sum$Group_gender, levels = c('Women', 'Men'))
 
@@ -440,7 +442,11 @@ Join_Sum_Q <- data_geral_19sum %>%
  full_join(data_40sum) %>% 
  full_join(data_43sum) %>% 
  full_join(data_44sum) %>% 
-  full_join(data_63sum)
+  full_join(data_63sum) %>% 
+  rename(
+    "GENDER_CAT" = "Group_gender",
+    "C_STAGE_CAT" = "Group_time2"
+  )
 
 # Translating and cleaning data of single-choice questions ----
 ## Q4 identity ----
@@ -496,17 +502,13 @@ unique(data_geral_af$`Q13_Emqualestadovocêresideatualmente?`)
 
 ## Q18 live where work ----
 data_geral_af<- data_geral_af %>% 
-  mutate(`Q28_Qual é a sua renda mensal?` = 
-           recode(`Q28_Qual é a sua renda mensal?`,
-                  "1 a 2 salários mínimos" = "1-2 minimum salary",
-                  "2 a 3 salários mínimos" = "2-3 minimum salary",
-                  "Mais que 10 salários mínimos" = ">10 minimum salary",
-                  "Mais que 5 salários mínimos" = ">5 minimum salary",
-                  "3 a 5 salários mínimos" = "3-5 minimum salary",
-                  "Prefiro não responder" = "Didnt answer",
-                  .default = as.character(`Q28_Qual é a sua renda mensal?`)))
+  mutate(`Q18_Você mora na mesma cidade onde está localizada a instituição/empresa a qual você está vinculada (o/e) atualmente?` = 
+           recode(`Q18_Você mora na mesma cidade onde está localizada a instituição/empresa a qual você está vinculada (o/e) atualmente?`,
+                  'Sim' = "Yes", 
+                  'Não' = "No",
+                  .default = as.character(`Q18_Você mora na mesma cidade onde está localizada a instituição/empresa a qual você está vinculada (o/e) atualmente?`)))
 
-unique(data_geral_af$`Q28_Qual é a sua renda mensal?`)
+unique(data_geral_af$`Q18_Você mora na mesma cidade onde está localizada a instituição/empresa a qual você está vinculada (o/e) atualmente?`)
 
 ## Q28 income ----
 data_geral_af<- data_geral_af %>% 
@@ -524,14 +526,17 @@ unique(data_geral_af$`Q28_Qual é a sua renda mensal?`)
 
 ## Q30 job institution ----
 data_geral_af = data_geral_af %>% 
-  mutate(`Q31_Você possui mais de uma fonte de renda?`= 
-           recode(`Q31_Você possui mais de uma fonte de renda?`,
-                  'Sim' = "Yes", 
-                  'Não' = "No",
-                  "Prefiro não responder" = "Didnt answer",
-                  .default = as.character(`Q31_Você possui mais de uma fonte de renda?`)))
+  mutate(`Q30_Qual é a melhor descrição da instituição onde você trabalha atualmente?`= 
+           recode(`Q30_Qual é a melhor descrição da instituição onde você trabalha atualmente?`,
+                  "Universidade pública" = "Public university", 
+                  "Universidade Comunitária"  = "Comunity university",
+                  "Universidade privada" = "Private university",
+                  "Instituição de pesquisa pública" = "Public research institution",
+                  "Universidade comunitária" = "Comunity university",
+                  "Instituição/Fundação de pesquisa privada" = "Private research institution",
+                  .default = as.character(`Q30_Qual é a melhor descrição da instituição onde você trabalha atualmente?`)))
 
-unique(data_geral_af$`Q31_Você possui mais de uma fonte de renda?`)
+unique(data_geral_af$`Q30_Qual é a melhor descrição da instituição onde você trabalha atualmente?`)
 
 ## Q31 more than one job ----
 data_geral_af = data_geral_af %>% 
@@ -569,13 +574,14 @@ unique(data_geral_af$`Q34_Colegas que mais auxiliam em sua posição atual são 
 
 ## Q37 gender-related  ----
 data_geral_af = data_geral_af %>% 
-  mutate(`Question_39_Você já sofreu assédio sexual por algum colega de trabalho?`= 
-           recode(`Question_39_Você já sofreu assédio sexual por algum colega de trabalho?`, 'Sim' = "Yes",
+  mutate(`Q37_Questões de desigualdade de gênero já foram ou são debatidas na sua instituição?`= 
+           recode(`Q37_Questões de desigualdade de gênero já foram ou são debatidas na sua instituição?`,
+                  'Sim' = "Yes",
                   'Não' = "No",
                   'Prefiro não responder' = "Didnt answer",
-                  .default = as.character(`Question_39_Você já sofreu assédio sexual por algum colega de trabalho?`))) 
+                  .default = as.character(`Q37_Questões de desigualdade de gênero já foram ou são debatidas na sua instituição?`))) 
 
-unique(data_geral_af$`Question_39_Você já sofreu assédio sexual por algum colega de trabalho?`)
+unique(data_geral_af$`Q37_Questões de desigualdade de gênero já foram ou são debatidas na sua instituição?`)
 
 ## Q39 % sexual harassment ----
 data_geral_af = data_geral_af %>% 
@@ -750,14 +756,19 @@ Q_45_55 <- output_Q45 %>%
  full_join(output_Q52) %>% 
  full_join(output_Q53) %>% 
  full_join(output_Q54) %>% 
- full_join(output_Q55)
+ full_join(output_Q55)%>% 
+  rename(
+    "GENDER_CAT" = "Group_gender",
+    "C_STAGE_CAT" = "Group_time2"
+  )
+
 
 Q_45_55_unite= Q_45_55 %>% gather("Type", "Count", 4:14)
 Q_45_55_unite$Count[is.na(Q_45_55_unite$Count)]<-0
 
-Q_45_55_unite2$Type<-as.character(Q_45_55_unite2$Type)
-Q_45_55_unite2$Influence<-as.factor(Q_45_55_unite2$Influence)
-Q_45_55_unite2$Count<-as.integer(Q_45_55_unite2$Count)
+Q_45_55_unite$Type<-as.character(Q_45_55_unite$Type)
+Q_45_55_unite$Influence<-as.factor(Q_45_55_unite$Influence)
+Q_45_55_unite$Count<-as.integer(Q_45_55_unite$Count)
 
 ### Translate factor data ----
 Q_38_Influence = Q_45_55_unite %>% 
@@ -857,16 +868,16 @@ output_Q32 <- data_cleaned %>%
  rename("Category" = Q32_WE) 
 
 output_Q34 <- data_cleaned %>% 
-  group_by(Q34_AP, GENDER_CAT, C_STAGE_CAT) %>% 
+  group_by(Q34_GP, GENDER_CAT, C_STAGE_CAT) %>% 
   summarize(count = n(), .groups = "drop") %>%
-  filter(Q34_AP != "Didnt answer") %>%
-  rename("Category" = Q34_AP) 
+  filter(Q34_GP != "Didnt answer") %>%
+  rename("Category" = Q34_GP) 
 
 output_Q39 <- data_cleaned %>% 
-  group_by(Q39_AP, GENDER_CAT, C_STAGE_CAT) %>% 
+  group_by(Q39_GP, GENDER_CAT, C_STAGE_CAT) %>% 
   summarize(count = n(), .groups = "drop") %>%
-  filter(Q39_AP != "Didnt answer") %>%
-  rename("Category" = Q39_AP) 
+  filter(Q39_GP != "Didnt answer") %>%
+  rename("Category" = Q39_GP) 
 
 output_Q40 <- data_cleaned %>% 
   group_by(Q40_P, GENDER_CAT, C_STAGE_CAT) %>% 

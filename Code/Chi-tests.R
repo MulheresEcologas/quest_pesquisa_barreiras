@@ -15,50 +15,41 @@ library(cowplot)
 library(ggpubr)
 library(DescTools)
 
-
 # Load data
-Join_Count_Q <- read.csv("./Results/Join_Count_Q.csv")  
-Join_Sum_Q <- read.csv("./Results/Join_Sum_Q.csv")
-Q_45_55_unite2 <- read.csv("./Results/Q_45_55_unite2.csv")
+Join_Count_Q <- read.csv("./Data/Join_Count_Q.csv")  
+Join_Sum_Q <- read.csv("./Data/Join_Sum_Q.csv")
+Q_38_Influence <- read.csv("./Data/Q_38_Influence.csv")
 
-# Organize data - remove non representative variables and with less than 5 answers
-Join_Count_Qf <- Join_Count_Q %>% 
-  filter(!Category %in% c("Didnt   answer",  "Didnt \n answer")) %>% 
-  ungroup()
+# Organize data ----
+#remove non representative variables and with less than 5 answers
 
 Join_Sum_Qf <- Join_Sum_Q %>% 
 filter(!Category %in% c("Retired", "Didnt answer", "End of temporary contract", "Fired from my last job", "Less focus on research", "Not applicable", "Work security", "Children didnt move", "Children moved but suffered   significant adverse effects", "Partner or significant other hasnt moved in with me,   but with significant negative effects on the relationship")) %>% 
   ungroup()
 
-str(Join_Count_Qf)
-unique(Join_Count_Qf$Category)
-
-Join_Count_Qf <- Join_Count_Qf %>% 
-  mutate(Category = case_when(Category == "2-2.9" ~ "1-3.9",
-                              Category == "3-3.9"  ~ "1-3.9",
-                              Category == "1-1.9"  ~ "1-3.9",
-                              .default = as.character(Category)))
+str(Join_Count_Q)
+unique(Join_Count_Q$Category)
 
 
-########## Analyse "Q33" "Q34" "Q39" "Q41" "Q57" "Q58" "Q60" "Q61" #############
+########## Analyse "Q26" "Q27" "Q32" "Q34" "Q39" "Q40" "Q42" "Q43" #############
 # by gender - count
-questions <- unique(Join_Count_Qf$Question)
+questions <- unique(Join_Count_Q$Question)
 combined_c_gender <- data.frame(NULL)
 
 for (q in questions) {
   
-  reshaped_df <- Join_Count_Qf %>%
+  reshaped_df <- Join_Count_Q %>%
     filter(Question == q) %>% 
-  group_by(Group_gender, Category) %>%
+  group_by(GENDER_CAT , Category) %>%
     summarize(Count = sum(count)) %>%
     spread(key = Category, value = Count, fill = 0) %>% 
     ungroup()
   
   # Convert to matrix 
   result_matrix <- as.matrix(reshaped_df %>%
-                               select(-c(Group_gender)))
+                               select(-c(GENDER_CAT )))
   
-  rownames(result_matrix) <- reshaped_df$Group_gender
+  rownames(result_matrix) <- reshaped_df$GENDER_CAT 
 
   #make chi-test
   Xsq <- chisq.test(result_matrix, simulate.p.value = TRUE)
@@ -72,10 +63,10 @@ for (q in questions) {
   
   df <- result_matrix %>%
     as.data.frame() %>%
-    rownames_to_column(var = "Group_gender") %>%
-    gather(key = "Category", value = "Frequency", -Group_gender) %>% 
-    mutate(Proportion = case_when(Group_gender == "Women" ~ Frequency/rs["Women"],
-    Group_gender == "Men" ~ Frequency/rs["Men"]),
+    rownames_to_column(var = "GENDER_CAT") %>%
+    gather(key = "Category", value = "Frequency", -GENDER_CAT ) %>% 
+    mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ Frequency/rs["Women"],
+    GENDER_CAT  == "Men" ~ Frequency/rs["Men"]),
     p_value_F = p_value20F,
     chi_stat = chi_square,
     p_valueChi=p_value20C,
@@ -90,27 +81,27 @@ write.csv(combined_c_gender, "./Results/combined_c_gender.csv")
 
 #by status - count
 
-Status<-unique(Join_Count_Qf$Group_time2)
+Status<-unique(Join_Count_Q$C_STAGE_CAT)
 
-questions <- unique(Join_Count_Qf$Question)
+questions <- unique(Join_Count_Q$Question)
 
 combined_c_status <- data.frame(NULL)
 
 for (q in questions) {
 for (i in Status) {
   
-  reshaped_df <- Join_Count_Qf %>% 
+  reshaped_df <- Join_Count_Q %>% 
   filter(Question == q) %>% 
-  filter(Group_time2 == i) %>% 
-  group_by(Group_gender, Category) %>%
+  filter(C_STAGE_CAT == i) %>% 
+  group_by(GENDER_CAT , Category) %>%
   summarize(Count = sum(count)) %>%
   spread(key = Category, value = Count, fill = 0) %>% 
   ungroup()
   
   result_matrix <- as.matrix(reshaped_df %>%
-                         select(-c(Group_gender)))
+                         select(-c(GENDER_CAT )))
   
-  rownames(result_matrix) <- reshaped_df$Group_gender
+  rownames(result_matrix) <- reshaped_df$GENDER_CAT 
   
   rs <- rowSums(result_matrix)
   
@@ -123,14 +114,14 @@ for (i in Status) {
   
   df <- result_matrix %>%
   as.data.frame() %>% 
-  rownames_to_column(var = "Group_gender") %>% 
-  gather(key = "Category",value = "Frequency", -Group_gender) %>% 
-  mutate(Proportion = case_when(Group_gender == "Women" ~ Frequency/rs["Women"],
-                                Group_gender == "Men" ~ Frequency/rs["Men"]),
+  rownames_to_column(var = "GENDER_CAT") %>% 
+  gather(key = "Category",value = "Frequency", -GENDER_CAT ) %>% 
+  mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ Frequency/rs["Women"],
+                                GENDER_CAT  == "Men" ~ Frequency/rs["Men"]),
          p_value_F = p_valueswF,
          chi_stat = chi_square,
          p_valueChi= p_valueswC,
-         Group_time2 = i,
+         C_STAGE_CAT = i,
          Question = q)
   
   combined_c_status <- rbind(combined_c_status, df)
@@ -139,25 +130,26 @@ for (i in Status) {
 }
 
 write.csv(combined_c_status, "./Results/combined_c_status.csv")
-################ Analyse  "Q19" "Q20" "Q36" "Q38" "Q40" "Q44" ##################
+################ Analyse  "Q14" "Q15" "Q29" "Q31" "Q33" "Q37" ##################
+#"Q14" "Q15" "Q16" "Q17" "Q19" "Q28" "Q29" "Q31" "Q33" "Q36" "Q37" "Q44"
 # by gender - sum
-questions <- unique(Join_Sum_Qf$Question)
+questions <- c("Q14", "Q15", "Q31", "Q33", "Q37")
 combined_s_gender <- data.frame(NULL)
 
 for (q in questions) {
   
   reshaped_df <- Join_Sum_Qf %>%
     filter(Question == q) %>% 
-    group_by(Group_gender, Category) %>%
+    group_by(GENDER_CAT, Category) %>%
     summarize(Sum = sum(Sum)) %>%
     spread(key = Category, value = Sum, fill = 0) %>% 
     ungroup()
   
   # Convert to matrix 
   result_matrix <- as.matrix(reshaped_df %>%
-                               select(-c(Group_gender)))
+                               select(-c(GENDER_CAT)))
   
-  rownames(result_matrix) <- reshaped_df$Group_gender
+  rownames(result_matrix) <- reshaped_df$GENDER_CAT 
   
   #make chi-test
   Xsq <- chisq.test(result_matrix, simulate.p.value = TRUE)
@@ -171,10 +163,10 @@ for (q in questions) {
   
   df <- result_matrix %>%
     as.data.frame() %>%
-    rownames_to_column(var = "Group_gender") %>%
-    gather(key = "Category", value = "Frequency", -Group_gender) %>% 
-    mutate(Proportion = case_when(Group_gender == "Women" ~ Frequency/rs["Women"],
-                                  Group_gender == "Men" ~ Frequency/rs["Men"]),
+    rownames_to_column(var = "GENDER_CAT") %>%
+    gather(key = "Category", value = "Frequency", -GENDER_CAT ) %>% 
+    mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ Frequency/rs["Women"],
+                                  GENDER_CAT  == "Men" ~ Frequency/rs["Men"]),
            p_value_F = p_value20F,
            chi_stat = chi_square,
            p_valueChi=p_value20C,
@@ -189,7 +181,7 @@ write.csv(combined_s_gender, "./Results/combined_s_gender.csv")
 
 # by status - sum
 
-Status<-unique(Join_Sum_Qf$Group_time2)
+Status<-unique(Join_Sum_Qf$C_STAGE_CAT)
 
 questions <- unique(Join_Sum_Qf$Question)
 
@@ -200,16 +192,16 @@ for (q in questions) {
     
     reshaped_df <- Join_Sum_Qf %>% 
       filter(Question == q) %>% 
-      filter(Group_time2 == i) %>% 
-      group_by(Group_gender, Category) %>%
+      filter(C_STAGE_CAT == i) %>% 
+      group_by(GENDER_CAT , Category) %>%
       summarize(Sum = sum(Sum)) %>%
       spread(key = Category, value = Sum, fill = 0) %>% 
       ungroup()
     
     result_matrix <- as.matrix(reshaped_df %>%
-                                 select(-c(Group_gender)))
+                                 select(-c(GENDER_CAT )))
     
-    rownames(result_matrix) <- reshaped_df$Group_gender
+    rownames(result_matrix) <- reshaped_df$GENDER_CAT 
     
     rs <- rowSums(result_matrix)
     
@@ -223,14 +215,14 @@ for (q in questions) {
     
     df <- result_matrix %>%
       as.data.frame() %>% 
-      rownames_to_column(var = "Group_gender") %>% 
-      gather(key = "Category",value = "Frequency", -Group_gender) %>% 
-      mutate(Proportion = case_when(Group_gender == "Women" ~ Frequency/rs["Women"],
-                                                 Group_gender == "Men" ~ Frequency/rs["Men"]),
+      rownames_to_column(var = "GENDER_CAT") %>% 
+      gather(key = "Category",value = "Frequency", -GENDER_CAT ) %>% 
+      mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ Frequency/rs["Women"],
+                                                 GENDER_CAT  == "Men" ~ Frequency/rs["Men"]),
              p_value_F = p_valueswF,
              chi_stat = chi_square,
              p_valueChi= p_valueswC,
-             Group_time2 = i,
+             C_STAGE_CAT = i,
              Question = q)
     
     combined_s_status <- rbind(combined_s_status, df)
@@ -249,19 +241,19 @@ for (q in questions) {
   
   reshaped_df <- Q_45_55_unite2 %>%
     filter(Type == q) %>% 
-    group_by(Group_gender, Influence) %>%
+    group_by(GENDER_CAT , Influence) %>%
     summarize(Count = sum(Count)) %>%
-    mutate(Proportion = case_when(Group_gender == "Women" ~ (Count/215)*100,
-                                  Group_gender == "Men" ~ (Count/68)*100)) %>% 
-    select(Group_gender, Influence, Proportion) %>% 
+    mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ (Count/215)*100,
+                                  GENDER_CAT  == "Men" ~ (Count/68)*100)) %>% 
+    select(GENDER_CAT , Influence, Proportion) %>% 
     spread(key = Influence, value = Proportion, fill = 0) %>% 
     ungroup()
   
   # Convert to matrix 
   result_matrix <- as.matrix(reshaped_df %>%
-                               select(-c(Group_gender)))
+                               select(-c(GENDER_CAT )))
   
-  rownames(result_matrix) <- reshaped_df$Group_gender
+  rownames(result_matrix) <- reshaped_df$GENDER_CAT 
   
   #make chi-test
   Xsq <- chisq.test(result_matrix, simulate.p.value = TRUE)
@@ -275,10 +267,10 @@ for (q in questions) {
   
   df <- result_matrix %>%
     as.data.frame() %>%
-    rownames_to_column(var = "Group_gender") %>%
-    gather(key = "Influence", value = "Frequency", -Group_gender) %>% 
-    mutate(Proportion = case_when(Group_gender == "Women" ~ Frequency/rs["Women"],
-                                  Group_gender == "Men" ~ Frequency/rs["Men"]),
+    rownames_to_column(var = "GENDER_CAT") %>%
+    gather(key = "Influence", value = "Frequency", -GENDER_CAT ) %>% 
+    mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ Frequency/rs["Women"],
+                                  GENDER_CAT  == "Men" ~ Frequency/rs["Men"]),
            p_value_F = p_value20F,
            chi_stat = chi_square,
            p_valueChi=p_value20C,
@@ -293,7 +285,7 @@ write.csv(combined_Influence_gender, "./Results/combined_Influence_gender.csv")
 
 # by status - Q45-55
 
-Status<-unique(Q_45_55_unite2$Group_time2)
+Status<-unique(Q_45_55_unite2$C_STAGE_CAT)
 
 questions <- unique(Q_45_55_unite2$Type)
 
@@ -304,19 +296,19 @@ for (q in questions) {
     
     reshaped_df <- Q_45_55_unite2 %>% 
       filter(Type == q) %>% 
-      filter(Group_time2 == i) %>% 
-      group_by(Group_gender, Influence) %>%
+      filter(C_STAGE_CAT == i) %>% 
+      group_by(GENDER_CAT , Influence) %>%
       summarize(Count = sum(Count)) %>%
-      mutate(Proportion = case_when(Group_gender == "Women" ~ (Count/215)*100,
-                                   Group_gender == "Men" ~ (Count/68)*100)) %>% 
-      select(Group_gender, Influence, Proportion) %>%
+      mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ (Count/215)*100,
+                                   GENDER_CAT  == "Men" ~ (Count/68)*100)) %>% 
+      select(GENDER_CAT , Influence, Proportion) %>%
       spread(key = Influence, value = Proportion, fill = 0) %>% 
       ungroup()
     
     result_matrix <- as.matrix(reshaped_df %>%
-                                 select(-c(Group_gender)))
+                                 select(-c(GENDER_CAT )))
     
-    rownames(result_matrix) <- reshaped_df$Group_gender
+    rownames(result_matrix) <- reshaped_df$GENDER_CAT 
     
     rs <- rowSums(result_matrix)
     
@@ -330,14 +322,14 @@ for (q in questions) {
     
     df <- result_matrix %>%
       as.data.frame() %>% 
-      rownames_to_column(var = "Group_gender") %>% 
-      gather(key = "Influence",value = "Frequency", -Group_gender) %>% 
-      mutate(Proportion = case_when(Group_gender == "Women" ~ Frequency/rs["Women"],
-                                    Group_gender == "Men" ~ Frequency/rs["Men"]),
+      rownames_to_column(var = "GENDER_CAT") %>% 
+      gather(key = "Influence",value = "Frequency", -GENDER_CAT ) %>% 
+      mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ Frequency/rs["Women"],
+                                    GENDER_CAT  == "Men" ~ Frequency/rs["Men"]),
              p_value_F = p_valueswF,
              chi_stat = chi_square,
              p_valueChi= p_valueswC,
-             Group_time2 = i,
+             C_STAGE_CAT = i,
              Type = q)
     
     combined_Influence_status <- rbind(combined_Influence_status, df)
@@ -355,7 +347,7 @@ gender_g5<- combined_Influence_gender %>%
   geom_bar(position="fill", stat="identity", alpha = 0.9) +
   theme_classic() +
   scale_fill_manual(values = c("Big Accelerator" = "blue4","Accelerator"= "cornflowerblue","Neutral/No impact" = "cornsilk2", "Impediment" = "coral", "Big impediment" ="brown3")) +
-  facet_wrap(vars(Group_gender), scales = "free_x")+
+  facet_wrap(vars(GENDER_CAT ), scales = "free_x")+
   ylab("Factors - Women") + 
   xlab("") +
   guides(fill = guide_legend(title="Influence",
@@ -378,12 +370,12 @@ unique(combined_Influence_status$Influence)
 combined_Influence_status$Influence <- factor(combined_Influence_status$Influence, levels = c("Big Accelerator", "Accelerator", "Neutral/No impact", "Impediment","Big impediment"))
 
 status_g5<- combined_Influence_status %>% 
-  filter(Group_time2 == "Senior") %>% 
+  filter(C_STAGE_CAT == "Senior") %>% 
   ggplot(aes(y=Type, x=Frequency, fill= Influence)) + 
   geom_bar(position="fill", stat="identity", alpha = 0.9) +
   theme_classic() +
   scale_fill_manual(values = c("Big Accelerator" = "blue4","Accelerator"= "cornflowerblue","Neutral/No impact" = "cornsilk2", "Impediment" = "coral", "Big impediment" ="brown3")) +
-  facet_wrap(vars(Group_gender), scales = "free_x")+
+  facet_wrap(vars(GENDER_CAT ), scales = "free_x")+
   ylab("Factors - Women") + 
   xlab("") +
   guides(fill = guide_legend(title="Influence",
@@ -414,9 +406,9 @@ str(combined_s_gender)
 # Plot the data sum
 P <- combined_s_gender %>% 
   filter(Question == 'Q40') %>%
-  ggplot(aes(x = reorder(Category, Proportion), y = Proportion, fill = Group_gender)) +
+  ggplot(aes(x = reorder(Category, Proportion), y = Proportion, fill = GENDER_CAT )) +
   geom_bar(stat = "identity", position = "dodge") +
-  facet_wrap(~ Group_gender, scales = "free") +
+  facet_wrap(~ GENDER_CAT , scales = "free") +
   scale_fill_manual(values=c(Women = "#9800B7", Men = "#3C9B1C"))+
   labs(title = "Team work preference",
        x = " ",
@@ -444,9 +436,9 @@ unique(Q$p_valueChi)
 # Plot data - count
 P <- combined_c_gender %>% 
   filter(Question == 'Q61') %>%
-  ggplot(aes(x = reorder(Category, Proportion), y = Proportion, fill = Group_gender)) +
+  ggplot(aes(x = reorder(Category, Proportion), y = Proportion, fill = GENDER_CAT )) +
   geom_bar(stat = "identity", position = "dodge") +
-  facet_wrap(~ Group_gender, scales = "free") +
+  facet_wrap(~ GENDER_CAT , scales = "free") +
   scale_fill_manual(values=c(Women = "#9800B7", Men = "#3C9B1C"))+
   labs(title = "Team work preference",
        x = " ",
@@ -468,14 +460,14 @@ P
 # Chi-square values - junior
 
 Q<-combined_c_status %>% 
-  filter(Group_time2 =="Junior") %>% 
+  filter(C_STAGE_CAT =="Junior") %>% 
   filter(Question == 'Q57')
 unique(Q$chi_stat)
 unique(Q$p_valueChi)
 
 # Chi-square values - senior
 Q<-combined_c_status %>% 
-  filter(Group_time2 =="Junior") %>% 
+  filter(C_STAGE_CAT =="Junior") %>% 
   filter(Question == 'Q57')
 unique(Q$chi_stat)
 unique(Q$p_valueChi)
@@ -484,9 +476,9 @@ unique(Q$p_valueChi)
 
 M <- combined_s_status %>% 
   filter(Question == "Q19") %>% 
-  ggplot(aes(x = reorder(Category, Proportion), y = Proportion, fill = Group_gender)) +
+  ggplot(aes(x = reorder(Category, Proportion), y = Proportion, fill = GENDER_CAT )) +
   geom_bar(stat = "identity", position = "stack") +
-  facet_wrap(~ Group_time2, scales = "free") +
+  facet_wrap(~ C_STAGE_CAT, scales = "free") +
   labs(title = "",
        x = " ",
        y = "Proportion") +
@@ -505,9 +497,9 @@ M
 
 M <- combined_c_status %>% 
   filter(Question == "Q57") %>% 
-  ggplot(aes(x = reorder(Category, Proportion), y = Proportion, fill = Group_gender)) +
+  ggplot(aes(x = reorder(Category, Proportion), y = Proportion, fill = GENDER_CAT )) +
   geom_bar(stat = "identity", position = "stack") +
-  facet_wrap(~ Group_time2, scales = "free") +
+  facet_wrap(~ C_STAGE_CAT, scales = "free") +
   labs(title = "",
        x = " ",
        y = "Proportion") +
