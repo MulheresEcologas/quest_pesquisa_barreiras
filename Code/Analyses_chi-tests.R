@@ -19,6 +19,8 @@ library(DescTools)
 Join_Count_Q <- read.csv("./Data/Join_Count_Q.csv")  
 Join_Sum_Q <- read.csv("./Data/Join_Sum_Q.csv")
 Q_38_Influence <- read.csv("./Data/Q_38_Influence.csv")
+data_sum_gender <- read.csv("./Data/data_sum_gender.csv")
+data_sum_status <- read.csv("./Data/ data_sum_status.csv")
 
 # Organize data ----
 #remove non representative variables and with less than 5 answers
@@ -288,7 +290,8 @@ for (q in questions) {
     as.data.frame() %>%
     rownames_to_column(var = "GENDER_CAT") %>%
     gather(key = "Influence", value = "Frequency", -GENDER_CAT ) %>% 
-    mutate(p_value_F = p_value20F,
+    mutate(Percentage = Frequency,
+      p_value_F = p_value20F,
            chi_stat = chi_square,
            p_valueChi=p_value20C,
            Type = q)
@@ -340,7 +343,8 @@ for (q in questions) {
       as.data.frame() %>% 
       rownames_to_column(var = "GENDER_CAT") %>% 
       gather(key = "Influence",value = "Frequency", -GENDER_CAT ) %>% 
-      mutate(p_value_F = p_valueswF,
+      mutate(Percentage = Frequency,
+        p_value_F = p_valueswF,
              chi_stat = chi_square,
              p_valueChi= p_valueswC,
              C_STAGE_CAT = i,
