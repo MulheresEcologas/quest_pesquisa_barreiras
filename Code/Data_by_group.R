@@ -98,7 +98,7 @@ data_geral_af <-data_geral_a %>%
 
 ### Summarize data set ----
 data_geral_count <- data_geral_af %>% 
- group_by(Group_gender, Group_occupation, Group_time2) %>% 
+ group_by(Group_gender, Group_time2) %>% 
  summarise(Count = n())
 
 data_geral_count = data_geral_count %>% 
@@ -122,6 +122,28 @@ data_matrix <- full_join(data_matrix, data_group) %>%
 data_geral_19 <- data_matrix %>% 
  gather('Category', 'Q_19_Answer', 4:19) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_19_Answer')
+
+data19_gender <- data_geral_19 %>%
+  filter(Q_19_Answer == 1) %>% 
+  filter(!Category %in% c("Q19_Não se aplica","Q19_Prefiro não responder")) %>% 
+  group_by(ID, Group_gender) %>% 
+  dplyr::summarise(Count = n()) %>% 
+  group_by(Group_gender) %>% 
+  dplyr::summarise(N_gender = n()) %>% 
+  mutate(Proportion = case_when(Group_gender == "Women" ~ N_gender/215,
+                                Group_gender == "Men" ~ N_gender/68))
+
+data19_status <- data_geral_19 %>%
+  filter(Q_19_Answer == 1) %>% 
+  filter(!Category %in% c("Q19_Não se aplica","Q19_Prefiro não responder")) %>% 
+  group_by(ID, Group_gender, Group_time2) %>% 
+  dplyr::summarise(Count = n()) %>% 
+  group_by(Group_gender, Group_time2) %>% 
+  dplyr::summarise(N_gender_status = n()) %>% 
+  mutate(Proportion = case_when(Group_gender == "Women" | Group_time2 == "Junior" ~ N_gender_status/138,
+                                Group_gender == "Women" | Group_time2 == "Senior" ~ N_gender_status/77,
+                                Group_gender == "Men" | Group_time2 == "Junior" ~ N_gender_status/31,
+                                Group_gender == "Men" | Group_time2 == "Senior" ~ N_gender_status/37))
  
 data_geral_19sum <- data_geral_19 %>% 
  group_by(Category, Group_gender, Group_time2) %>%
@@ -152,10 +174,35 @@ data_geral_19sum$Group_gender <- factor(data_geral_19sum$Group_gender, levels = 
 
 data_geral_19sum$Category <- as.factor(data_geral_19sum$Category)
 
+unique(data_geral_19sum$Category)
+
 ### Q20 Consequences of moving to advance your career ----
 data_geral_20 <- data_matrix %>% 
- gather('Category', 'Q_20_Answer', 21:31) %>% 
- select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_20_Answer') 
+ gather('Category', 'Q_20_Answer', 21:30) %>% 
+ select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_20_Answer')
+
+data20_gender <- data_geral_20 %>%
+  filter(Q_20_Answer == 1) %>% 
+  filter(!Category %in% c("Q20_Não se aplica","Q20_Prefiro não responder")) %>% 
+  group_by(ID, Group_gender) %>% 
+  dplyr::summarise(Count = n()) %>% 
+  group_by(Group_gender) %>% 
+  dplyr::summarise(N_gender = n()) %>% 
+  mutate(Proportion = case_when(Group_gender == "Women" ~ N_gender/215,
+                                Group_gender == "Men" ~ N_gender/68))
+
+data20_status <- data_geral_20 %>%
+  filter(Q_20_Answer == 1) %>% 
+  filter(!Category %in% c("Q20_Não se aplica","Q20_Prefiro não responder")) %>% 
+  group_by(ID, Group_gender, Group_time2) %>% 
+  dplyr::summarise(Count = n()) %>% 
+  group_by(Group_gender, Group_time2) %>% 
+  dplyr::summarise(N_gender_status = n()) %>% 
+  mutate(Proportion = case_when(Group_gender == "Women" | Group_time2 == "Junior" ~ N_gender_status/138,
+                                Group_gender == "Women" | Group_time2 == "Senior" ~ N_gender_status/77,
+                                Group_gender == "Men" | Group_time2 == "Junior" ~ N_gender_status/31,
+                                Group_gender == "Men" | Group_time2 == "Senior" ~ N_gender_status/37))
+
 
 data_geral_20sum <- data_geral_20 %>% 
  group_by(Category, Group_gender, Group_time2) %>%
@@ -163,7 +210,6 @@ data_geral_20sum <- data_geral_20 %>%
  ungroup()
 
 data_geral_20sum = data_geral_20sum %>% mutate(
- Category= recode(Category, "Q20_Com.minha.família.de.origem.parentes..mãe.pai.irmã.o.tia.o.prima.o.etc..x" = "End of temporary contract"),
  Category= recode(Category, "Q20_Companheiro.a..outra.pessoa.não.se.mudou.mas.o.relacionamento.permaneceu.intacto" = 'Partner or significant other hasnt moved in with me, and the relationship had no significant negative effects'), 
  Category= recode(Category, "Q20_Companheiro.a..outra.pessoa.significativa.mudou.se.comigo.com.efeitos.negativos.mínimos.sobre.relação" = 'Partner or significant other has moved in with me, with no significant negative effects on the relationship'), 
  Category= recode(Category,"Q20_Companheiro.a..outra.pessoa.significativa.não.se.mudou.comigo.e.o.relacionamento.sofreu.efeitos.adversos" = 'Partner or significant other has moved in with me, and the relationship had significant negative effects'),
@@ -171,7 +217,7 @@ data_geral_20sum = data_geral_20sum %>% mutate(
  Category= recode(Category,"Q20_Companheiro.a..outra.pessoa.significativa.se.mudou.comigo.mas.com.problemas.significativos.na.carreira.do.cônjuge.outra.pessoa.significativa" = 'Partner or other significant person has moved in with me, but has career problems'),
  Category= recode(Category,"Q20_Filhos.mudaram.com.nenhum.ou.mínimos.efeitos.negativos" = "Children moved with none or minimum adverse effects"),
  Category= recode(Category,"Q20_Filhos.não.se.mudaram" = 'Children didnt move'),
- Category= recode(Category,"Filhos.se.mudaram.mas.sofreram.efeitos.adversos.significativos" = 'Children moved but suffered significant adverse effects'),
+ Category= recode(Category,"Q20_Filhos.se.mudaram.mas.sofreram.efeitos.adversos.significativos" = 'Children moved but suffered significant adverse effects'),
  Category= recode(Category,"Q20_Não.se.aplica" = 'Not applicable'),
  Category= recode(Category,"Q20_Prefiro.não.responder" = 'Didnt answer'))
 
@@ -179,10 +225,11 @@ data_geral_20sum = data_geral_20sum %>% mutate(
 data_geral_20sum$Group_gender <- factor(data_geral_20sum$Group_gender, levels = c('Women', 'Men'))
 
 data_geral_20sum$Category <- as.factor(data_geral_20sum$Category)
+unique(data_geral_20sum$Category)
 
 ### Q21 with whom do you live? ----
 data_geral_21 <- data_matrix %>%
- gather('Category', 'Q_21_Answer', 33:39) %>% 
+ gather('Category', 'Q_21_Answer', 32:38) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_21_Answer')
 
 data_geral_21sum <- data_geral_21 %>% 
@@ -193,7 +240,7 @@ data_geral_21sum <- data_geral_21 %>%
 data_geral_21sum = data_geral_21sum %>% 
  mutate(
  Category= recode(Category, "Q21_Com.amiga.o.s..ou.colega.o.s." = "With friends and colegues"),
- Category= recode(Category, "Q21_Com.minha.família.de.origem.parentes..mãe.pai.irmã.o.tia.o.prima.o.etc..y" = 'With my original family'), 
+ Category= recode(Category, "Q21_Com.minha.família.de.origem.parentes..mãe.pai.irmã.o.tia.o.prima.o.etc." = 'With my original family'), 
  Category= recode(Category, "Q21_Com.minha.meu.companheira.o" = 'With my partner'), 
  Category= recode(Category,"Q21_Com.minha.s..meu.s..filha.s..filho.s." = 'With my children'),
  Category= recode(Category,"Q21_Em.república.pensionato.etc." = 'in a shared-flat or boarding house'),
@@ -207,7 +254,7 @@ unique(data_geral_21sum$Category)
 
 ### Q22 housework ----
 data_geral_22 <- data_matrix %>%
- gather('Category', 'Q_22_Answer', 41:47) %>% 
+ gather('Category', 'Q_22_Answer', 40:46) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_22_Answer')
 
 data_geral_22sum <- data_geral_22 %>% 
@@ -222,18 +269,19 @@ data_geral_22sum = data_geral_22sum %>%
  Category= recode(Category, "Q22_São.feitas.por.crianças" = 'They are done by children'), 
  Category= recode(Category,"Q22_São.feitas.por.mim" = 'They are done by me'),
  Category= recode(Category,"Q22_São.feitas.por.outros.residentes" = 'They are done by other residents'),
- Category= recode(Category,"Q22_São.feitas.por.uma.ajuda.paga." = 'They are done by a paid help'),
+ Category= recode(Category,"Q22_São.feitas.por.uma.ajuda.paga" = 'They are done by a paid help'),
  Category= recode(Category,"Q22_Prefiro.não.responder" = 'Didnt answer'))
 
 data_geral_22sum$Group_gender <- factor(data_geral_22sum$Group_gender, levels = c('Women', 'Men'))
 
 data_geral_22sum$Category <- as.factor(data_geral_22sum$Category)
+unique(data_geral_22sum$Category)
 
 ### Q24 ecology graduation ----
 colnames(data_matrix)
 
 data_geral_24 <- data_matrix %>%
- gather('Category', 'Q_24_Answer', 49:57) %>% 
+ gather('Category', 'Q_24_Answer', 48:56) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_24_Answer') %>% 
  na.omit()
 
@@ -262,7 +310,7 @@ unique(data_geral_24sum$Category)
 
 ### Q35 hiring and promoting ----
 data_geral_35 <- data_matrix %>% 
- gather('Category', 'Q_35_Answer', 59:65) %>% 
+ gather('Category', 'Q_35_Answer', 58:64) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_35_Answer')
 
 data_35sum <- data_geral_35 %>% 
@@ -280,6 +328,8 @@ data_35sum = data_35sum %>% mutate(
 
 data_35sum$Group_gender <- factor(data_35sum$Group_gender, levels = c('Women', 'Men'))
 data_35sum$Category <- as.factor(data_35sum$Category)
+
+unique(data_35sum$Category)
 
 ### Q36 % gender in departament ----
 data_geral_36 <- data_geral_af %>% 
@@ -300,11 +350,37 @@ data_36sum = data_36sum %>% mutate(
  Category= recode(Category,"Q36_Não se aplica" = 'Not applicable'),
  Category= recode(Category,"Q36_Prefiro não responder" = 'Didnt answer'))
 
-### Q38 % moral harassment ----
+unique(data_36sum$Category)
+
+### Q38 % gender discrimination ----
 data_geral_38 <- data_geral_af %>% 
  gather('Category', 'Q_38_Answer', 47:57) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_38_Answer')
 
+unique(data_geral_38$Category)
+
+data38_gender <- data_geral_38 %>%
+  filter(Q_38_Answer == 1) %>% 
+  filter(!Category %in% c("Q38_Não se aplica","Q38_Prefiro não responder")) %>% 
+  group_by(ID, Group_gender) %>% 
+  dplyr::summarise(Count = n()) %>% 
+  group_by(Group_gender) %>% 
+  dplyr::summarise(N_gender = n()) %>% 
+  mutate(Proportion = case_when(Group_gender == "Women" ~ N_gender/215,
+                                Group_gender == "Men" ~ N_gender/68))
+
+data38_status <- data_geral_38 %>%
+  filter(Q_38_Answer == 1) %>% 
+  filter(!Category %in% c("Q38_Não se aplica","Q38_Prefiro não responder")) %>% 
+  group_by(ID, Group_gender, Group_time2) %>% 
+  dplyr::summarise(Count = n()) %>% 
+  group_by(Group_gender, Group_time2) %>% 
+  dplyr::summarise(N_gender_status = n()) %>% 
+  mutate(Proportion = case_when(Group_gender == "Women" | Group_time2 == "Junior" ~ N_gender_status/138,
+                                Group_gender == "Women" | Group_time2 == "Senior" ~ N_gender_status/77,
+                                Group_gender == "Men" | Group_time2 == "Junior" ~ N_gender_status/31,
+                                Group_gender == "Men" | Group_time2 == "Senior" ~ N_gender_status/37))
+  
 data_38sum <- data_geral_38 %>% 
  group_by(Category, Group_gender, Group_time2) %>% 
  summarise(Sum = sum(Q_38_Answer))
@@ -322,10 +398,34 @@ data_38sum = data_38sum %>% mutate(
  Category= recode(Category,"Q38_Você já sentiu que seu gênero foi decisivo para ter uma opinião aceita" = "Opinion acceptance influenced by gender"),
  Category= recode(Category,"Q38_Você já sofreu alguma discriminação por estar grávida ou por ser mulher e poder engravidar" = 'Discrimination on the basis of pregnancy'))
 
+unique(data_38sum$Category)
+
 ### Q40 sexual harassment ----
 data_geral_40 <- data_geral_af %>% 
  gather('Category', 'Q_40_Answer', 60:68) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_40_Answer')
+
+data40_gender <- data_geral_40 %>%
+  filter(Q_40_Answer == 1) %>% 
+  filter(!Category %in% c("Q40_Não se aplica","Q40_Prefiro não responder")) %>% 
+  group_by(ID, Group_gender) %>% 
+  dplyr::summarise(Count = n()) %>% 
+  group_by(Group_gender) %>% 
+  dplyr::summarise(N_gender = n()) %>% 
+  mutate(Proportion = case_when(Group_gender == "Women" ~ N_gender/215,
+                                Group_gender == "Men" ~ N_gender/68))
+
+data40_status <- data_geral_40 %>%
+  filter(Q_40_Answer == 1) %>% 
+  filter(!Category %in% c("Q40_Não se aplica","Q40_Prefiro não responder")) %>% 
+  group_by(ID, Group_gender, Group_time2) %>% 
+  dplyr::summarise(Count = n()) %>% 
+  group_by(Group_gender, Group_time2) %>% 
+  dplyr::summarise(N_gender_status = n()) %>% 
+  mutate(Proportion = case_when(Group_gender == "Women" | Group_time2 == "Junior" ~ N_gender_status/138,
+                                Group_gender == "Women" | Group_time2 == "Senior" ~ N_gender_status/77,
+                                Group_gender == "Men" | Group_time2 == "Junior" ~ N_gender_status/31,
+                                Group_gender == "Men" | Group_time2 == "Senior" ~ N_gender_status/37))
 
 data_40sum <- data_geral_40 %>% 
  group_by(Category, Group_gender, Group_time2) %>% 
@@ -342,6 +442,7 @@ data_40sum = data_40sum %>% mutate(
  Category= recode(Category,"Q40_Prefiro não responder" = 'Didnt answer'),
  Category= recode(Category,"Q40_Você foi coagida a não expor o assédio" = 'Coerced not to disclose the situation'))
 
+unique(data_40sum$Category)
 ### Q43 leaving academia ----
 data_geral_43 <- data_geral_af %>% 
  gather('Category', 'Q_43_Answer', 72:85) %>% 
@@ -371,10 +472,34 @@ data_43sum$Group_gender <- factor(data_43sum$Group_gender, levels = c('Women', '
 
 data_43sum$Category <- factor(data_43sum$Category, levels = c('Didnt answer', 'Not applicable',"Retired", 'Situations of sexual harassment', 'Situations of gender discrimination',"Prioritization of the city/country where you live in relation to work", 'Family Responsibilities', 'Prioritized being close to the family', 'Situations of moral harassment',"I lost interest in research", 'More interesting jobs in other fields', 'No scientific position available','Better income elsewhere' ,'Financial support is lacking'))
 
+unique(data_43sum$Category)
+
 ### Q44 field work ----
 data_geral_44 <- data_matrix %>% 
- gather('Category', 'Q_44_Answer', 67:72) %>% 
+ gather('Category', 'Q_44_Answer', 66:71) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_44_Answer')
+
+data44_gender <- data_geral_44 %>%
+  filter(Q_44_Answer == 1) %>% 
+  filter(!Category %in% c("Q44_Não se aplica","Q44_Prefiro não responder")) %>% 
+  group_by(ID, Group_gender) %>% 
+  dplyr::summarise(Count = n()) %>% 
+  group_by(Group_gender) %>% 
+  dplyr::summarise(N_gender = n()) %>% 
+  mutate(Proportion = case_when(Group_gender == "Women" ~ N_gender/215,
+                                Group_gender == "Men" ~ N_gender/68))
+
+data44_status <- data_geral_44 %>%
+  filter(Q_44_Answer == 1) %>% 
+  filter(!Category %in% c("Q44_Não se aplica","Q44_Prefiro não responder")) %>% 
+  group_by(ID, Group_gender, Group_time2) %>% 
+  dplyr::summarise(Count = n()) %>% 
+  group_by(Group_gender, Group_time2) %>% 
+  dplyr::summarise(N_gender_status = n()) %>% 
+  mutate(Proportion = case_when(Group_gender == "Women" | Group_time2 == "Junior" ~ N_gender_status/138,
+                                Group_gender == "Women" | Group_time2 == "Senior" ~ N_gender_status/77,
+                                Group_gender == "Men" | Group_time2 == "Junior" ~ N_gender_status/31,
+                                Group_gender == "Men" | Group_time2 == "Senior" ~ N_gender_status/37))
 
 data_44sum <- data_geral_44 %>% 
  group_by(Category, Group_gender, Group_time2) %>% 
@@ -393,9 +518,11 @@ data_44sum$Group_gender <- factor(data_44sum$Group_gender, levels = c('Women', '
 
 data_44sum$Category <- factor(data_44sum$Category, levels = c('Didnt answer', 'Not applicable','Company', "Educational experience", 'Worried about personal security', 'Amount of work'))
 
+unique(data_44sum$Category)
+
 ### Q63 children and field work ----
 data_geral_63 <- data_matrix %>% 
- gather('Category', 'Q_63_Answer', 74:81) %>% 
+ gather('Category', 'Q_63_Answer', 73:80) %>% 
  select('ID', 'Group_gender', 'Group_time2', 'Category', 'Q_63_Answer')
 
 data_63sum <- data_geral_63 %>% 
@@ -416,6 +543,8 @@ data_63sum = data_63sum %>% mutate(
 data_63sum$Group_gender <- factor(data_63sum$Group_gender, levels = c('Women', 'Men'))
 
 data_63sum$Category <- factor(data_63sum$Category, levels = c('Didnt answer', 'Not applicable',"I don't have children", "Partner takes care of children at home", "Partner takes care of children in the field", "I sent the children to a friend or family member", "I hired someone to take care of the children","I brought/hired someone to take care of the children in the field"))
+
+unique(data_63sum$Category)
 
 ### Join multiple-choice data ----
 data_geral_19sum$Question <- "Q14"
@@ -447,6 +576,31 @@ Join_Sum_Q <- data_geral_19sum %>%
     "GENDER_CAT" = "Group_gender",
     "C_STAGE_CAT" = "Group_time2"
   )
+
+### Join unique answers
+data19_gender$Question <- "Q14"
+data20_gender$Question <- "Q15"
+data38_gender$Question <- "Q31"
+data40_gender$Question <- "Q33"
+data44_gender$Question <- "Q37"
+
+data19_status$Question <- "Q14"
+data20_status$Question <- "Q15"
+data38_status$Question <- "Q31"
+data40_status$Question <- "Q33"
+data44_status$Question <- "Q37"
+
+data_sum_gender <- data19_gender %>% 
+  full_join(data20_gender) %>% 
+  full_join(data38_gender) %>% 
+  full_join(data40_gender) %>% 
+  full_join(data44_gender)
+
+data_sum_status <- data19_status %>% 
+  full_join(data20_status) %>% 
+  full_join(data38_status) %>% 
+  full_join(data40_status) %>% 
+  full_join(data44_status)
 
 # Translating and cleaning data of single-choice questions ----
 ## Q4 identity ----
@@ -762,7 +916,7 @@ Q_45_55 <- output_Q45 %>%
     "C_STAGE_CAT" = "Group_time2"
   )
 
-
+colnames(Q_45_55)
 Q_45_55_unite= Q_45_55 %>% gather("Type", "Count", 4:14)
 Q_45_55_unite$Count[is.na(Q_45_55_unite$Count)]<-0
 
@@ -772,13 +926,16 @@ Q_45_55_unite$Count<-as.integer(Q_45_55_unite$Count)
 
 ### Translate factor data ----
 Q_38_Influence = Q_45_55_unite %>% 
- mutate(Influence = recode(Influence, 'Neutro' = "Neutral/No impact", 'Impedimento' = "Impediment", 'Não impactou' = "Neutral/No impact", 'Acelerador'= "Accelerator", 'Grande Acelerador'= "Big Accelerator", 'Grande impedimento'= "Big impediment")) %>%
+ mutate(Influence = recode(Influence, 'Neutro' = "Neutral", 'Impedimento' = "Impediment", 'Não impactou' = "cannot say", 'Acelerador'= "Accelerator", 'Grande Acelerador'= "Big Accelerator", 'Grande impedimento'= "Big impediment")) %>%
+  filter(Influence != "cannot say") %>% 
  ungroup()
 
-Q_38_Influence$Influence <- factor(Q_45_55_unite2$Influence, levels = c("Big Accelerator", "Accelerator", "Neutral/No impact", "Impediment","Big impediment"))
+Q_38_Influence$Influence <- factor(Q_38_Influence$Influence)
 
-Q_38_Influence$Type <- factor(Q_45_55_unite2$Type, levels = c("Ethnicity", "Age", "Geographical origin", "Teaching responsibilities", "Administrative responsibilities", "Gender discrimination", "Lack of job security", "Socioeconomic level", "Family responsibilities", "Lack of resources", "Lack of funding"))
+Q_38_Influence$Type <- factor(Q_38_Influence$Type, levels = c("Ethnicity", "Age", "Geographical origin", "Teaching responsibilities", "Administrative responsibilities", "Gender discrimination", "Lack of job security", "Socioeconomic level", "Family responsibilities", "Lack of resources", "Lack of funding"))
 
+unique(Q_38_Influence$Type)
+unique(Q_38_Influence$Influence)
 ## Clean data and rename columns ----
 
 data_cleaned <- data_geral_af %>% 
@@ -917,4 +1074,6 @@ Join_Count_Q <- output_Q26 %>%
 
 write.csv(Join_Count_Q, "./Data/Join_Count_Q.csv")
 write.csv(Join_Sum_Q, "./Data/Join_Sum_Q.csv") 
-write.csv(Q_38_Influence,"./Data/Q_38_Influence.csv") 
+write.csv(Q_38_Influence,"./Data/Q_38_Influence.csv")
+write.csv(data_sum_gender,"./Data/data_sum_gender.csv")
+write.csv(data_sum_status,"./Data/data_sum_status.csv")
