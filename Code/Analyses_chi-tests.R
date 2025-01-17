@@ -160,22 +160,14 @@ for (q in questions) {
   chi_square <- Xsq$statistic
   
   #Make dataframe
-  rs_w <- data_sum_gender %>% 
-    filter(Question == q) %>%
-    filter(Group_gender == "Women") %>% 
-    select(N_gender)
-  
-  rs_m <- data_sum_gender %>% 
-    filter(Question == q) %>%
-    filter(Group_gender == "Men") %>% 
-    select(N_gender)
+  rs <- rowSums(result_matrix)
   
   df <- result_matrix %>%
     as.data.frame() %>%
     rownames_to_column(var = "GENDER_CAT") %>%
     gather(key = "Category", value = "Frequency", -GENDER_CAT ) %>% 
-    mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ Frequency/rs_w$N_gender,
-                                  GENDER_CAT  == "Men" ~ Frequency/rs_m$N_gender),
+    mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ Frequency/rs["Women"],
+                                  GENDER_CAT  == "Men" ~ Frequency/rs["Men"]),
            p_value_F = p_value20F,
            chi_stat = chi_square,
            p_valueChi=p_value20C,
@@ -213,16 +205,7 @@ for (q in questions) {
     rownames(result_matrix) <- reshaped_df$GENDER_CAT 
     
     #Make dataframe
-    rs_w <- data_sum_status %>% 
-      filter(Question == q) %>%
-      filter(Group_time2 == i) %>% 
-      filter(Group_gender == "Women") %>% 
-      select(N_gender_status)
-    
-    rs_m <- data_sum_status %>% 
-      filter(Group_time2 == i) %>% 
-      filter(Group_gender == "Men") %>% 
-      select(N_gender_status)
+    rs <- rowSums(result_matrix)
     
     Xsq <- chisq.test(result_matrix, simulate.p.value = TRUE)
     Xsq_fisher <- fisher.test(result_matrix, simulate.p.value = TRUE)
@@ -236,8 +219,8 @@ for (q in questions) {
       as.data.frame() %>% 
       rownames_to_column(var = "GENDER_CAT") %>% 
       gather(key = "Category",value = "Frequency", -GENDER_CAT ) %>% 
-      mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ Frequency/rs_w$N_gender_status,
-                                                 GENDER_CAT  == "Men" ~ Frequency/rs_w$N_gender_status),
+      mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ Frequency/rs["Women"],
+                                                 GENDER_CAT  == "Men" ~ Frequency/rs["Men"]),
              p_value_F = p_valueswF,
              chi_stat = chi_square,
              p_valueChi= p_valueswC,
@@ -264,10 +247,10 @@ for (q in questions) {
     filter(Type == q) %>% 
     group_by(GENDER_CAT , Influence) %>%
     summarize(Count = sum(Count)) %>%
-    mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ (Count/215)*100,
-                                  GENDER_CAT  == "Men" ~ (Count/68)*100)) %>% 
-    select(GENDER_CAT , Influence, Proportion) %>% 
-    spread(key = Influence, value = Proportion, fill = 0) %>% 
+    #mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ (Count/215)*100,
+     #                             GENDER_CAT  == "Men" ~ (Count/68)*100)) %>% 
+    select(GENDER_CAT , Influence, Count) %>% 
+    spread(key = Influence, value = Count, fill = 0) %>% 
     ungroup()
   
   # Convert to matrix 
@@ -290,7 +273,9 @@ for (q in questions) {
     as.data.frame() %>%
     rownames_to_column(var = "GENDER_CAT") %>%
     gather(key = "Influence", value = "Frequency", -GENDER_CAT ) %>% 
-    mutate(Percentage = Frequency,
+    mutate(Percentage = case_when(
+      GENDER_CAT  == "Women" ~ Frequency/rs["Women"], 
+      GENDER_CAT  == "Men" ~ Frequency/rs["Men"]),
       p_value_F = p_value20F,
            chi_stat = chi_square,
            p_valueChi=p_value20C,
@@ -318,10 +303,11 @@ for (q in questions) {
       filter(C_STAGE_CAT == i) %>% 
       group_by(GENDER_CAT , Influence) %>%
       summarize(Count = sum(Count)) %>%
-      mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ (Count/215)*100,
-                                   GENDER_CAT  == "Men" ~ (Count/68)*100)) %>% 
-      select(GENDER_CAT , Influence, Proportion) %>%
-      spread(key = Influence, value = Proportion, fill = 0) %>% 
+      # mutate(Proportion = case_when(
+      #   GENDER_CAT  == "Women" ~ (Count/215)*100,
+      #   GENDER_CAT  == "Men" ~ (Count/68)*100)) %>% 
+      select(GENDER_CAT , Influence, Count) %>%
+      spread(key = Influence, value = Count, fill = 0) %>% 
       ungroup()
     
     result_matrix <- as.matrix(reshaped_df %>%
@@ -338,12 +324,13 @@ for (q in questions) {
     p_valueswC <- Xsq$p.value
     chi_square <- Xsq$statistic
     
-    
     df <- result_matrix %>%
       as.data.frame() %>% 
       rownames_to_column(var = "GENDER_CAT") %>% 
       gather(key = "Influence",value = "Frequency", -GENDER_CAT ) %>% 
-      mutate(Percentage = Frequency,
+      mutate(Percentage = case_when(
+        GENDER_CAT  == "Women" ~ Frequency/rs["Women"], 
+        GENDER_CAT  == "Men" ~ Frequency/rs["Men"]),
         p_value_F = p_valueswF,
              chi_stat = chi_square,
              p_valueChi= p_valueswC,
@@ -420,7 +407,7 @@ status_g5
 ## Chi-square values - sum questions ----
 
 Q<-combined_s_gender %>% 
-  filter(Question == 'Q63')
+  filter(Question == 'Q14')
 
 unique(Q$chi_stat)
 unique(Q$p_valueChi)
@@ -429,7 +416,7 @@ str(combined_s_gender)
 ### Plot the data sum ----
 
 P <- combined_s_gender %>% 
-  filter(Question == 'Q40') %>%
+  filter(Question == 'Q14') %>%
   ggplot(aes(x = reorder(Category, Proportion), y = Proportion, fill = GENDER_CAT )) +
   geom_bar(stat = "identity", position = "dodge") +
   facet_wrap(~ GENDER_CAT , scales = "free") +
@@ -501,10 +488,11 @@ unique(Q$p_valueChi)
 ### Plot data ----
 
 M <- combined_s_status %>% 
-  filter(Question == "Q19") %>% 
+  filter(Question == "Q14") %>% 
+  filter(C_STAGE_CAT == "Junior") %>% 
   ggplot(aes(x = reorder(Category, Proportion), y = Proportion, fill = GENDER_CAT )) +
   geom_bar(stat = "identity", position = "stack") +
-  facet_wrap(~ C_STAGE_CAT, scales = "free") +
+  #facet_wrap(~ C_STAGE_CAT, scales = "free") +
   labs(title = "",
        x = " ",
        y = "Proportion") +
