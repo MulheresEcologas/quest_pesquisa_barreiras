@@ -133,7 +133,7 @@ write.csv(combined_c_status, "./Results/combined_c_status.csv")
 #"Q14" "Q15" "Q16" "Q17" "Q19" "Q28" "Q29" "Q31" "Q33" "Q36" "Q37" "Q44"
 
 ### By gender - sum ----
-questions <- c("Q14", "Q15","Q28", "Q31", "Q33", "Q37")
+questions <- c("Q14", "Q15","Q28", "Q29", "Q31", "Q33", "Q37")
 combined_s_gender <- data.frame(NULL)
 
 for (q in questions) {
@@ -183,7 +183,7 @@ write.csv(combined_s_gender, "./Results/combined_s_gender.csv")
 
 Status<-unique(Join_Sum_Qf$C_STAGE_CAT)
 
-questions <- c("Q14", "Q15","Q28", "Q31", "Q33", "Q37")
+questions <- c("Q14", "Q15","Q28", "Q29", "Q31", "Q33", "Q37")
 
 combined_s_status <- data.frame(NULL)
 
