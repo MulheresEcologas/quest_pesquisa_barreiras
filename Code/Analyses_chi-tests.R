@@ -236,20 +236,20 @@ write.csv(combined_s_status, "./Results/combined_s_status.csv")
 # Analyse  Q38 ----
 ### By gender - Q38 ---- 
 
-questions <- unique(Q_38_Influence$Type)
+questions <- unique(Q_38_Influence$Influence)
 
 combined_Influence_gender <- data.frame(NULL)
 
 for (q in questions) {
   
   reshaped_df <- Q_38_Influence %>%
-    filter(Type == q) %>% 
-    group_by(GENDER_CAT , Influence) %>%
+    filter(Influence == q) %>% 
+    group_by(GENDER_CAT , Type) %>%
     summarize(Count = sum(Count)) %>%
     #mutate(Proportion = case_when(GENDER_CAT  == "Women" ~ (Count/215)*100,
      #                             GENDER_CAT  == "Men" ~ (Count/68)*100)) %>% 
-    select(GENDER_CAT , Influence, Count) %>% 
-    spread(key = Influence, value = Count, fill = 0) %>% 
+    select(GENDER_CAT , Type, Count) %>% 
+    spread(key = Type, value = Count, fill = 0) %>% 
     ungroup()
   
   # Convert to matrix 
@@ -271,26 +271,26 @@ for (q in questions) {
   df <- result_matrix %>%
     as.data.frame() %>%
     rownames_to_column(var = "GENDER_CAT") %>%
-    gather(key = "Influence", value = "Frequency", -GENDER_CAT ) %>% 
+    gather(key = "Type", value = "Frequency", -GENDER_CAT ) %>% 
     mutate(Percentage = case_when(
       GENDER_CAT  == "Women" ~ Frequency/rs["Women"], 
       GENDER_CAT  == "Men" ~ Frequency/rs["Men"]),
       p_value_F = p_value20F,
            chi_stat = chi_square,
            p_valueChi=p_value20C,
-           Type = q)
+      Influence = q)
   
   combined_Influence_gender <- rbind(combined_Influence_gender, df)                      
   
 }
 
-write.csv(combined_Influence_gender, "./Results/combined_Influence_gender.csv")
+write.csv(combined_Influence_gender, "./Results/combined_Type_gender.csv")
 
 ### By status - Q38 ----
 
 Status<-unique(Q_38_Influence$C_STAGE_CAT)
 
-questions <- unique(Q_38_Influence$Type)
+questions <- unique(Q_38_Influence$Influence)
 
 combined_Influence_status <- data.frame(NULL)
 
@@ -298,15 +298,15 @@ for (q in questions) {
   for (i in Status) {
     
     reshaped_df <- Q_38_Influence %>% 
-      filter(Type == q) %>% 
+      filter(Influence == q) %>% 
       filter(C_STAGE_CAT == i) %>% 
-      group_by(GENDER_CAT , Influence) %>%
+      group_by(GENDER_CAT , Type) %>%
       summarize(Count = sum(Count)) %>%
       # mutate(Proportion = case_when(
       #   GENDER_CAT  == "Women" ~ (Count/215)*100,
       #   GENDER_CAT  == "Men" ~ (Count/68)*100)) %>% 
-      select(GENDER_CAT , Influence, Count) %>%
-      spread(key = Influence, value = Count, fill = 0) %>% 
+      select(GENDER_CAT , Type, Count) %>%
+      spread(key = Type, value = Count, fill = 0) %>% 
       ungroup()
     
     result_matrix <- as.matrix(reshaped_df %>%
@@ -326,7 +326,7 @@ for (q in questions) {
     df <- result_matrix %>%
       as.data.frame() %>% 
       rownames_to_column(var = "GENDER_CAT") %>% 
-      gather(key = "Influence",value = "Frequency", -GENDER_CAT ) %>% 
+      gather(key = "Type",value = "Frequency", -GENDER_CAT ) %>% 
       mutate(Percentage = case_when(
         GENDER_CAT  == "Women" ~ Frequency/rs["Women"], 
         GENDER_CAT  == "Men" ~ Frequency/rs["Men"]),
@@ -334,14 +334,14 @@ for (q in questions) {
              chi_stat = chi_square,
              p_valueChi= p_valueswC,
              C_STAGE_CAT = i,
-             Type = q)
+             Influence = q)
     
     combined_Influence_status <- rbind(combined_Influence_status, df)
   }
   
 }
 
-write.csv(combined_Influence_status, "./Results/combined_Influence_status.csv")
+write.csv(combined_Influence_status, "./Results/combined_Type_status.csv")
 
 ### Plot results Q38 ----
 #### Make plot by gender ----
