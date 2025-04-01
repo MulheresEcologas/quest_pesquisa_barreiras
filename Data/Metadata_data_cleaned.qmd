@@ -36,7 +36,127 @@ The online survey was approved by the human research ethics committee of the Fed
 
 The full questionnaire can be access [here](https://docs.google.com/document/d/1mCdxmBDXIof6uf-SFflDfcGB828JWkIm/edit?usp=sharing&ouid=107687295963966370443&rtpof=true&sd=true).
 
-The online survey was avaiable from june to october 2023. A total of 399 respondents answered the online survey. Answers were filtered first by gender, as we had few respondents who didn’t identify themselves as women and men, by country of birth (we only considered answers of respondents who were born and have worked in Brazil) and by occupation, as our goal is to see respondent's perception in scientific institutions we only considered answers of those who were currently at the academy. Our final dataset encompasses 283 answers, of which 69 were self-identified as men and 215 as women - "data_cleaned.csv".
+The online survey was avaiable from june to october 2023. A total of 399 respondents answered the online survey. Answers were filtered first by gender, as we had few respondents who didn’t identify themselves as women and men, by country of birth (we only considered answers of respondents who were born and have worked in Brazil) and by occupation, as our goal is to see respondent's perception in scientific institutions we only considered answers of those who were currently at the academy. Our final dataset encompasses 283 answers, of which 69 were self-identified as men and 215 as women - "data_cleaned.csv". The raw data can be found in "respostas_cleaned_final.xlsx". All data manipulation that resulted in the final data "data_cleaned.csv" can be found in the "Data_by_group.R" script.
+
+## Relation between "data_cleaned.csv" and "respostas_cleaned_final.xlsx"
+
+The first piece of information relates to the column names in 'data_cleaned.csv,' and the second to 'respostas_cleaned_final.xlsx'.
+
+"COD_ID" = "ID"
+
+"Q4_PS" = "Q3_Qual a sua identidade de gênero?",
+
+"Q5_PS" = "Q4_Como você se identifica?",
+
+"Q6_PS" = "Q5_Qual é a sua idade?",
+
+"Q7_PS" = "Q7_Qualéoseupaísdeorigem?",
+
+"Q8_PS" = "Q9_Qualéoseuestadodeorigem?",
+
+"Q9_PS" = "Q10_Qualéoseumunicípio/cidadedeorigem?",
+
+"Q10_PS" = "Q11_Emqualpaísquevocêresideatualmente?",
+
+"Q11_PS" = "Q13_Emqualestadovocêresideatualmente?",
+
+"Q12_PS" = "Q14_Emqualmunicípio/cidadevocêresideatualmente?",
+
+"Q7_Q10_PS" = "Q15_Mudou de país",
+
+"Q8_Q11_PS" = "Q16_Mudou de estado (mesmo país)",
+
+"Q9_Q12_PS" = "Q17_Mudou de cidade (mesmo estado/mesmo país)",
+
+"Q13_DC" = "Q18_Você mora na mesma cidade onde está localizada a instituição/empresa a qual você está vinculada (o/e) atualmente?",
+
+"Q14_DC" = "Question_19_Se você se mudou para uma nova cidade, estado ou país nos últimos cinco anos, quais foram os fatores motivadores? (Marque todas as opções que se aplicam)",
+
+"Q15_DC" = "Question_20_Se você já mudou de residência com o objetivo de progredir em sua carreira verifique as categorias que descrevem as consequências de seus movimentos. (Marque todas as opções que se aplicam)",
+
+"Q16_DC" = "Question_21_Como/com quem você mora? (Marque todas as opções que se aplicam)",
+
+"Q17_DC" = "Question_22_Quem faz as tarefas domésticas semanais (por exemplo, cozinhar, limpar, lavar roupa) em sua casa? (Marque todas as opções que se aplicam)",
+
+"Q18_EI" = "Q23_Em qual curso de graduação você se formou?",
+
+"Q19_EI" = "Question_24_Qual a sua formação na área de ecologia?",
+
+"Q20_EI" = "Q25_Qual categoria melhor descreve a sua situação atual?",
+
+"Q21_EI" = "Q26_Há quanto tempo você está na situação acima?",
+
+"Q22_EI" = "Q28_Qual é a sua renda mensal?",
+
+"Q23_EI" = "Q30_Qual é a melhor descrição da instituição onde você trabalha atualmente?",
+
+"Q24_EI" = "Q31_Você possui mais de uma fonte de renda?",
+
+"Q25_EI" = "Q32_Se respondeu SIM na pergunta anterior, qual outro trabalho você desempenha?",
+
+"Q26_WE" = "Q33_Você prefere trabalhar em uma equipe:",
+
+"Q27_WE" = "Q34_Colegas que mais auxiliam em sua posição atual são principalmente:",
+
+"Q28_WE" = "Question_35_Em seu trabalho atual, você observa quais das situações abaixo? (Marque todas as opções que se aplicam)",
+
+"Q29_WE" = "Question_36_Caso você atue em alguma instituição pública, você observa quais das situações abaixo? (Marque todas as opções que se aplicam)",
+
+"Q30_WE" = "Q37_Questões de desigualdade de gênero já foram ou são debatidas na sua instituição?",
+
+"Q31_WE" = "Question_38_Você já passou por algumas destas situações em sua trajetória profissional?(Marque todas as opções que se aplicam)",
+
+"Q32_WE" = "Question_39_Você já sofreu assédio sexual por algum colega de trabalho?",
+
+"Q33_WE" = "Question_40_Se você respondeu SIM na pergunta anterior e se sentir à vontade para responder, indique quais situações se aplicam ao ocorrido: (Marque todas as opções que se aplicam)",
+
+"Q34_GP" = "Q41_Se você fez pós-graduação (ex: especialização, mestrado ou doutorado), a pessoa que te orientou por último foi:",
+
+"Q35_AP" = "Q42_Se você cursou pós-graduação, marque, entre as seguintes afirmações, aquela que melhor descreve o papel da pessoa que te orientou em sua carreira:",
+
+"Q36_GP" = "Question_43_Se você não está mais no meio acadêmico, quais foram os motivos que a/o levaram a sair? (Marque todas as opções que se aplicam)",
+
+"Q37_GP" = "Question_44_Se você já realizou trabalho de campo e trouxe alguém com você como assistente de campo, identifique a razão específica para fazê-lo. (Marque todas as opções que se aplicam)",
+
+"Q38_AGE_GP" = "Q45_Como os fatores listados influenciam a sua produtividade científica? \[Idade\]", "Q38_RACE_GP" = "Q46_Como os fatores listados influenciam a sua produtividade científica? \[Raça/Etnia\]", "Q38_sOCIO_GP" = "Q47_Como os fatores listados influenciam a sua produtividade científica? \[Nível Socioeconômico\]",
+
+"Q38_GEO_GP" = "Q48_Como os fatores listados influenciam a sua produtividade científica? \[Origem geográfica\]",
+
+"Q38_FAM_GP" = "Q49_Como os fatores listados influenciam a sua produtividade científica? \[Responsabilidades familiares\]",
+
+"Q38_TEAC_GP" = "Q50_Como os fatores listados influenciam a sua produtividade científica? \[Responsabilidades com ensino\]",
+
+"Q38_ADM_GP" = "Q51_Como os fatores listados influenciam a sua produtividade científica? \[Responsabilidades administrativas\]",
+
+"Q38_JOB_GP" = "Q52_Como os fatores listados influenciam a sua produtividade científica? \[Falta de segurança no trabalho\]",
+
+"Q38_FUND_GP" = "Q53_Como os fatores listados influenciam a sua produtividade científica? \[Falta de financiamento\]",
+
+"Q38_RESOURCE_GP" = "Q54_Como os fatores listados influenciam a sua produtividade científica? \[Falta de recursos para fazer meu trabalho (por exemplo, ajuda de escritório/escritório, laboratório, equipamentos, infraestrutura, etc.)\]",
+
+"Q38_GENDER_GP" = "Q55_Como os fatores listados influenciam a sua produtividade científica? \[Discriminação de sexo/gênero\]",
+
+"Q39_GP" = "Q57_Qual é a sua MÉDIA/ANO de produção científica (artigos, capítulos de livros, livros), nos últimos 4 anos, ou seja, de 2019 até o momento?",
+
+"Q40_P" = "Q58_Você tem filhos?",
+
+"Q41_P" = "Q59_Se você respondeu SIM na pergunta anterior, especifique quantos filhos você tem.",
+
+"Q42_P" = "Q60_Sua escolha profissional influencia a sua vontade de ter filhos(as)?",
+
+"Q43_P" = "Q61_Você acha que a licença maternidade pode impactar negativamente na profissão das mulheres?",
+
+"Q44_P" = "Q63_Se você tem filhos e realizou trabalho de campo, como você equilibrou o trabalho de campo com cuidado parental? (Marque todas as opções que se aplicam)",
+
+"Q45_S" = "Q64_Como você classifica a sua vida pessoal neste momento?",
+
+"Q46_S" = "Q64_Você vê uma carreira de sucesso como profissional no ramo da Ecologia?",
+
+"GENDER_CAT" = "Group_gender",
+
+"ACD_OCC" = "Group_occupation",
+
+"C_STAGE_CAT" = "Group_time2"
 
 ## Description of data set content "data_cleaned.csv"
 
