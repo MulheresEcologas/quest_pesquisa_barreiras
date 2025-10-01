@@ -19,13 +19,13 @@ dir()
 # Load the ca package
 library(ca)
 library(FactoMineR)
-library(tidiverse)
+library(tidyverse)
+library(factoextra)
+library(ggplot2)
+library(ggrepel)
 
 # Read the entire sheet into a data frame
-data <- read.csv2("ANACON or MCA data_geral_af_edb - data_geral_af.csv", sep=",")
-data <- read.csv2("data_cleaned.csv", sep=",")
-
-str(data)
+data_geral_af <- read.csv2("./Data/data_geral_af.csv", sep=",")
 
 #Question Q39_GP: What is your scientific productivity?
 Q39_GP <- data_geral_af %>% select(starts_with("Q57"))
@@ -39,14 +39,9 @@ Q16_DC <- data_geral_af %>% select(starts_with("Question_21"))
 #Question Q4_PS: gender
 Q4_PS <- data_geral_af %>% select(starts_with("Group_gender"))
 
-
 #Question C_STAGE_CAT: Stage of career
 C_STAGE_CAT<-data_geral_af %>% select(starts_with("Group_time2"))
-# C_STAGE_CAT <- C_STAGE_CAT %>%
-#   mutate(C_STAGE_CAT = recode(C_STAGE_CAT,
-#                         "Junior" = "Early",
-#                         "Senior" = "Senior"))
-str(data_geral_af)
+
 #Question Q40_P: Parenthood
 Q40_P <- data_geral_af %>% select(starts_with("Q58"))
 
@@ -64,7 +59,6 @@ Q32_WE <- data_geral_af %>% select(starts_with("Question_39"))
 
 #Question Q34_GP: If you were/are in a postgraduate program, the person who supervised you last was:
 Q34_GP <- data_geral_af %>% select(starts_with("Q41"))
-
 
 ##########################
 #ANACOR 1 # fazer só com mulheres p/ ver se fica mais claro a relação
@@ -97,8 +91,8 @@ data_anacor_1<-data.frame(Q31_WE,
                         Q34_GP,
                         Q4_PS,
                         C_STAGE_CAT)
+
 str(data_anacor_1)
-library(dplyr)
 
 data_anacor_1 <- data_anacor_1 %>%
   mutate(across(c(
@@ -114,8 +108,7 @@ data_anacor_1 <- data_anacor_1 %>%
     "Q38_Não.se.aplica",                                                                                                                
     "Q38_Prefiro.não.responder"
     ), 
-    ~ recode(., `1` = "yes", `0` = "no"))) #%>% 
-  #filter(Q38_Não.se.aplica  == "no")
+    ~ recode(., `1` = "yes", `0` = "no")))
 
 # Replace dots with spaces in all column names
 colnames(data_anacor_1) <- gsub("\\.", " ", colnames(data_anacor_1))
@@ -141,14 +134,13 @@ colnames(data_anacor_1) <- c(
 )
 
 
-# Translate levels for 'Supervisor'
+# change levels for 'Supervisor'
 data_anacor_1$Supervisor <- recode(data_anacor_1$Gender_Identity,
                                         "Women" = "Woman",
-                                        "Men" = "Man",
-                                        #"Prefiro não responder"="Prefer not to respond"
+                                        "Men" = "Man"
                                    )
 
-# Translate levels for 'Gender_Identity'
+# change levels for 'Gender_Identity'
 data_anacor_1$Gender_Identity <- recode(data_anacor_1$Gender_Identity,
                                         "Women" = "Woman",
                                         "Men" = "Man")
@@ -171,15 +163,9 @@ eigenvalues_mca_1
 # Contributions of categories to the dimensions
 mca_1_result$var$contrib
 
-library("factoextra")
-
 # Color individuals by groups, add concentration ellipses
 # Remove labels: label = "none".
 grp_1 <- as.factor(data_anacor_1[, "Gender_Identity"])
-
-library(factoextra)
-library(ggplot2)
-library(ggrepel)
 
 my_theme <- theme_bw(base_size = 14,
                      base_family = "",
@@ -206,20 +192,14 @@ p <- fviz_mca_biplot(mca_1_result,
                      ellipse.level = 0.99,
                      repel=T,
                      col.var ="black") +
-  # geom_text_repel(data = as.data.frame(mca_1_result$var$coord), 
-  #                 aes(x = `Dim 1`, y = `Dim 2`, label = rownames(mca_1_result$var$coord)),
-  #                 color = "black", size = 5) +
-  # Customizing the colors for different levels of the grouping variable
   scale_color_manual(values = c("#9cd6d5", "#feac6b"), 
                      name = "Gender Identity",  # Adding a legend title
-                     labels = c("Man", "Woman")) +  # Customize labels if needed
+                     labels = c("Man", "Woman")) +
   scale_fill_manual(values = c("#9cd6d5", "#feac6b"),
                     name = "Gender Identity",  # Adding a legend title
-                    labels = c("Man", "Woman")) +  # Customize labels if needed
-  # Customizing axes labels for clarity
+                    labels = c("Man", "Woman")) +  
   labs(x = "Dimension 1(31.9%)", y = "Dimension 2 (10.3%)", 
        title = "ANACOR 1") +
-  # Adjusting theme for better readability
   my_theme
 
 # Print the plot
@@ -278,14 +258,9 @@ eigenvalues_mca_3
 # Contributions of categories to the dimensions
 mca_3_result$var$contrib
 
-library("factoextra")
-
 # Color individuals by groups, add concentration ellipses
 # Remove labels: label = "none".
 grp_3 <- as.factor(data_anacor_3[, "GI"])
-
-library(factoextra)
-library(ggplot2)
 
 # Create the MCA plot
 p <- fviz_mca_biplot(mca_3_result, 
