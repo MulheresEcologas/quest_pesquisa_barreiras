@@ -1,0 +1,299 @@
+---
+title: "Metadata questionnaire 'data_cleaned.csv'"
+author: "Ana Paula Lula Costa"
+format: 
+  pdf:
+    pdf-engine: xelatex
+    documentclass: article
+editor: visual
+---
+
+## **Title:**
+
+Barriers faced by ecologists: perceptions throughout the stages of the academic career in Brazil
+
+## Data owners:
+
+**Individuals:** Ana Paula Lula Costa, Elvira D'Bastiani
+
+**Organization:** Mulheres na Ecologia Project
+
+**email address:** anapaulalula\@gmail.com, elviradbastiani\@gmail.com, mulheresecologas\@gmail.com
+
+**Site address:** <https://www.mulheresnaecologia.com/>
+
+## Abstract:
+
+## Key-words:
+
+## License and Usage Rights:
+
+All data are available for use, but pending on contact owners. Collaboration in future scientific papers is encouraged.
+
+## Data collection
+
+The online survey was approved by the human research ethics committee of the Federal University of Bahia (CEpEE/UFBA) under the Certificate of Presentation for Ethical Assessment (CAAE) 69100023.3.0000.5531. The questionnaire was divided into seven sections comprising 45 objective questions and three descriptive questions, regarding personal information, domestic labor and career, education and income, work environment, guidance and productivity, parenthood, and, academic career satisfaction.
+
+The full questionnaire can be access [here](https://docs.google.com/document/d/1mCdxmBDXIof6uf-SFflDfcGB828JWkIm/edit?usp=sharing&ouid=107687295963966370443&rtpof=true&sd=true).
+
+The online survey was avaiable from june to october 2023. A total of 399 respondents answered the online survey. Answers were filtered first by gender, as we had few respondents who didn’t identify themselves as women and men, by country of birth (we only considered answers of respondents who were born and have worked in Brazil) and by occupation, as our goal is to see respondent's perception in scientific institutions we only considered answers of those who were currently at the academy. Our final dataset encompasses 283 answers, of which 69 were self-identified as men and 215 as women - "data_cleaned.csv". The raw data can be found in "respostas_cleaned_final.xlsx". All data manipulation that resulted in the final data "data_cleaned.csv" can be found in the "Data_by_group.R" script.
+
+## Relation between "data_cleaned.csv" and "respostas_cleaned_final.xlsx"
+
+The first piece of information relates to the column names in 'data_cleaned.csv,' and the second to 'respostas_cleaned_final.xlsx'.
+
+"COD_ID" = "ID"
+
+"Q4_PS" = "Q3_Qual a sua identidade de gênero?",
+
+"Q5_PS" = "Q4_Como você se identifica?",
+
+"Q6_PS" = "Q5_Qual é a sua idade?",
+
+"Q7_PS" = "Q7_Qualéoseupaísdeorigem?",
+
+"Q8_PS" = "Q9_Qualéoseuestadodeorigem?",
+
+"Q9_PS" = "Q10_Qualéoseumunicípio/cidadedeorigem?",
+
+"Q10_PS" = "Q11_Emqualpaísquevocêresideatualmente?",
+
+"Q11_PS" = "Q13_Emqualestadovocêresideatualmente?",
+
+"Q12_PS" = "Q14_Emqualmunicípio/cidadevocêresideatualmente?",
+
+"Q7_Q10_PS" = "Q15_Mudou de país",
+
+"Q8_Q11_PS" = "Q16_Mudou de estado (mesmo país)",
+
+"Q9_Q12_PS" = "Q17_Mudou de cidade (mesmo estado/mesmo país)",
+
+"Q13_DC" = "Q18_Você mora na mesma cidade onde está localizada a instituição/empresa a qual você está vinculada (o/e) atualmente?",
+
+"Q14_DC" = "Question_19_Se você se mudou para uma nova cidade, estado ou país nos últimos cinco anos, quais foram os fatores motivadores? (Marque todas as opções que se aplicam)",
+
+"Q15_DC" = "Question_20_Se você já mudou de residência com o objetivo de progredir em sua carreira verifique as categorias que descrevem as consequências de seus movimentos. (Marque todas as opções que se aplicam)",
+
+"Q16_DC" = "Question_21_Como/com quem você mora? (Marque todas as opções que se aplicam)",
+
+"Q17_DC" = "Question_22_Quem faz as tarefas domésticas semanais (por exemplo, cozinhar, limpar, lavar roupa) em sua casa? (Marque todas as opções que se aplicam)",
+
+"Q18_EI" = "Q23_Em qual curso de graduação você se formou?",
+
+"Q19_EI" = "Question_24_Qual a sua formação na área de ecologia?",
+
+"Q20_EI" = "Q25_Qual categoria melhor descreve a sua situação atual?",
+
+"Q21_EI" = "Q26_Há quanto tempo você está na situação acima?",
+
+"Q22_EI" = "Q28_Qual é a sua renda mensal?",
+
+"Q23_EI" = "Q30_Qual é a melhor descrição da instituição onde você trabalha atualmente?",
+
+"Q24_EI" = "Q31_Você possui mais de uma fonte de renda?",
+
+"Q25_EI" = "Q32_Se respondeu SIM na pergunta anterior, qual outro trabalho você desempenha?",
+
+"Q26_WE" = "Q33_Você prefere trabalhar em uma equipe:",
+
+"Q27_WE" = "Q34_Colegas que mais auxiliam em sua posição atual são principalmente:",
+
+"Q28_WE" = "Question_35_Em seu trabalho atual, você observa quais das situações abaixo? (Marque todas as opções que se aplicam)",
+
+"Q29_WE" = "Question_36_Caso você atue em alguma instituição pública, você observa quais das situações abaixo? (Marque todas as opções que se aplicam)",
+
+"Q30_WE" = "Q37_Questões de desigualdade de gênero já foram ou são debatidas na sua instituição?",
+
+"Q31_WE" = "Question_38_Você já passou por algumas destas situações em sua trajetória profissional?(Marque todas as opções que se aplicam)",
+
+"Q32_WE" = "Question_39_Você já sofreu assédio sexual por algum colega de trabalho?",
+
+"Q33_WE" = "Question_40_Se você respondeu SIM na pergunta anterior e se sentir à vontade para responder, indique quais situações se aplicam ao ocorrido: (Marque todas as opções que se aplicam)",
+
+"Q34_GP" = "Q41_Se você fez pós-graduação (ex: especialização, mestrado ou doutorado), a pessoa que te orientou por último foi:",
+
+"Q35_AP" = "Q42_Se você cursou pós-graduação, marque, entre as seguintes afirmações, aquela que melhor descreve o papel da pessoa que te orientou em sua carreira:",
+
+"Q36_GP" = "Question_43_Se você não está mais no meio acadêmico, quais foram os motivos que a/o levaram a sair? (Marque todas as opções que se aplicam)",
+
+"Q37_GP" = "Question_44_Se você já realizou trabalho de campo e trouxe alguém com você como assistente de campo, identifique a razão específica para fazê-lo. (Marque todas as opções que se aplicam)",
+
+"Q38_AGE_GP" = "Q45_Como os fatores listados influenciam a sua produtividade científica? \[Idade\]", "Q38_RACE_GP" = "Q46_Como os fatores listados influenciam a sua produtividade científica? \[Raça/Etnia\]", "Q38_sOCIO_GP" = "Q47_Como os fatores listados influenciam a sua produtividade científica? \[Nível Socioeconômico\]",
+
+"Q38_GEO_GP" = "Q48_Como os fatores listados influenciam a sua produtividade científica? \[Origem geográfica\]",
+
+"Q38_FAM_GP" = "Q49_Como os fatores listados influenciam a sua produtividade científica? \[Responsabilidades familiares\]",
+
+"Q38_TEAC_GP" = "Q50_Como os fatores listados influenciam a sua produtividade científica? \[Responsabilidades com ensino\]",
+
+"Q38_ADM_GP" = "Q51_Como os fatores listados influenciam a sua produtividade científica? \[Responsabilidades administrativas\]",
+
+"Q38_JOB_GP" = "Q52_Como os fatores listados influenciam a sua produtividade científica? \[Falta de segurança no trabalho\]",
+
+"Q38_FUND_GP" = "Q53_Como os fatores listados influenciam a sua produtividade científica? \[Falta de financiamento\]",
+
+"Q38_RESOURCE_GP" = "Q54_Como os fatores listados influenciam a sua produtividade científica? \[Falta de recursos para fazer meu trabalho (por exemplo, ajuda de escritório/escritório, laboratório, equipamentos, infraestrutura, etc.)\]",
+
+"Q38_GENDER_GP" = "Q55_Como os fatores listados influenciam a sua produtividade científica? \[Discriminação de sexo/gênero\]",
+
+"Q39_GP" = "Q57_Qual é a sua MÉDIA/ANO de produção científica (artigos, capítulos de livros, livros), nos últimos 4 anos, ou seja, de 2019 até o momento?",
+
+"Q40_P" = "Q58_Você tem filhos?",
+
+"Q41_P" = "Q59_Se você respondeu SIM na pergunta anterior, especifique quantos filhos você tem.",
+
+"Q42_P" = "Q60_Sua escolha profissional influencia a sua vontade de ter filhos(as)?",
+
+"Q43_P" = "Q61_Você acha que a licença maternidade pode impactar negativamente na profissão das mulheres?",
+
+"Q44_P" = "Q63_Se você tem filhos e realizou trabalho de campo, como você equilibrou o trabalho de campo com cuidado parental? (Marque todas as opções que se aplicam)",
+
+"Q45_S" = "Q64_Como você classifica a sua vida pessoal neste momento?",
+
+"Q46_S" = "Q64_Você vê uma carreira de sucesso como profissional no ramo da Ecologia?",
+
+"GENDER_CAT" = "Group_gender",
+
+"ACD_OCC" = "Group_occupation",
+
+"C_STAGE_CAT" = "Group_time2"
+
+## Description of data set content "data_cleaned.csv"
+
+Data set containing the 283 answers used to conduct our research analysis. This data set was manipulated in the script 'data_by_group.R' and is derived from the table "respostas_cleaned_final.xlsx". Only the questions relevant for this research were translated to English. The refined and translated data related to the multiple choice questions (Q14, Q15, Q16, Q17, Q19, Q28, Q29, Q31, Q33, Q36, Q37, Q44) can be found at the **"Join_Sum_Q.csv"** and related to the question 38 can be found at the **"Q_38_Influence.csv"** data set.
+
+1.  PERSONAL INFORMATION - PS
+
+COD_ID : Identification code.
+
+Q4_PS : What is your gender identity?
+
+Q5_PS : What is your race or ethnicity?
+
+Q6_PS : What is your age?
+
+Q7_PS : What is your home country?
+
+Q8_PS :What is your home state?
+
+Q9_PS : What is your hometown (municipality)?
+
+Q10_PS : In which country do you currently reside?
+
+Q11_PS : In which state do you currently reside?
+
+Q12_PS : In which municipality do you currently reside?
+
+Q7_Q10_PS : Still live in their home country TRUE and FALSE
+
+Q8_Q11_PS : Still live in their home state TRUE and FALSE
+
+Q9_Q12_PS : Still live in their home town TRUE and FALSE
+
+2.  DOMESTIC LABOR AND CAREER - DC
+
+Q13_DC : Do you live in the same city where the institution/company you are currently affiliated with is located? "Sim" and "Não" .
+
+Q14_DC : If you have moved to a new city, state, or country in the past five years, what were the motivating factors? Please check all categories that apply to your move:
+
+Q15_DC : If you have moved residence to advance your career, please check the categories that describe the consequences of your move:
+
+Q16_DC : How/with whom do you live?
+
+Q17_DC : Who performs the weekly household chores (e.g., cooking, cleaning, laundry) in your home?
+
+3.  EDUCATION AND INCOME -EI
+
+Q18_EI : What is your degree?
+
+Q19_EI : What is your academic background in ecology?
+
+Q20_EI : Which category best describes your current situation?
+
+Q21_EI : How long have you been in the situation above?
+
+Q22_EI : Average monthly income
+
+Q23_EI : What is the best description of the institution where you currently work?
+
+Q24_EI : Do you have more than one source of income? "No" and "Yes".
+
+Q25_EI : If you answered YES to the previous question, what other work do you do?
+
+4.  WORK ENVIRONMENT -WE
+
+Q26_WE : Do you prefer to work in a team that is:
+
+Q27_WE : Colleagues who are most helpful in your current position are primarily: "Women" "Both" and "Men" .
+
+Q28_WE : In your current job, which of the following situations do you observe?
+
+Q29_WE : If you work in a public institution, which of the following situations do you observe?
+
+Q30_WE :Have issues of gender inequality ever been or are currently being discussed at your institution? "Sim" and "Não".
+
+Q31_WE : Have you experienced any of the following situations in your professional career? Choose all that apply:
+
+Q32_WE : Have you experienced sexual harassment from a colleague? "No" and "Yes" .
+
+Q33_WE : If you answered YES to the previous question, indicate which situations apply:
+
+5.  GUIDANCE AND PRODUCTIVITY - GP
+
+Q34_GP : If you have completed postgraduate studies (e.g., specialization, master's, or PhD), your last supervisor was: "Mulher" and "Homem".
+
+Q35_GP : If you completed postgraduate studies, please mark one of the following statements that best describes the role of your supervisor in your career:
+
+Q36_GP : If you are no longer in academia, what were the reasons for leaving?
+
+Q37_GP : If you have conducted fieldwork and brought someone with you as a field assistant, please identify the specific reason for doing so. Choose all that apply:
+
+Q38: If you have not yet reached the level of scientific productivity you believe you are capable of, what factors have been significant obstacles?
+
+Q38_AGE_GP : Age
+
+Q38_RACE_GP :Race or ethnicity
+
+Q38_SOCIO_GP : Socioeconomic level
+
+Q38_GEO_GP : Geographical origin
+
+Q38_TEAC_GP : Teaching responsibilities
+
+Q38_ADM_GP : Administrative responsibilities
+
+Q38_JOB_GP : Job insecurity
+
+Q38_FUND_GP : Lack of funding (e.g., office help/office, laboratory, equipment, infrastructure, etc.)
+
+Q38_RESOURCE_GP: Lack of resources to do my work
+
+Q38_GENDER_GP : Sex/gender discrimination
+
+Q39_GP : What is your average scientific production per year over the last 8 years (papers, book chapters, books), i.e., from 2015 to the present? "
+
+6.  PARENTHOOD - P
+
+Q40_P : Do you have children? "No" and "Yes".
+
+Q41_P : If you answered YES to the question above, How many children do you have?
+
+Q42_P :Does your professional choice influence your desire to have children? "No" and "Yes"
+
+Q43_P : Do you agree with the statement that maternity leave has a negative effect on women's careers? "Sim" and "Não".
+
+Q44_P : If you have children and conducted fieldwork, how did you balance fieldwork with parental care? Please mark those you used. "Não tenho filhos"
+
+7.  ACADEMIC CAREER SATISFACTION - S
+
+Q45_S : How do you rate your personal life at this moment? "Sucessfull" "Unsucessfull" .
+
+Q46_S : Do you see a successful career for yourself as a professional in the field of Ecology? "Não" and "Sim" .
+
+8.  SUMMARIZED CATEGORIES
+
+GENDER_CAT : Gender category based on the question Q4. "Women" "Men" .
+
+ACD_OCC : Currently occupation filtered for only academicy and reserach positions and summarized . Based on Q20 "Master_PhD_Candidate"
+
+C_STAGE_CAT : Carrier stage category . Based on the questions Q21 and Q6. "Junior" and "Senior".
