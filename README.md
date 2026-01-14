@@ -1,6 +1,6 @@
 # quest_pesquisa_barreiras
 
-Paper: Challenges Faced in Ecological Sciences Careers: A Case Study of Gender Perceptions in Brazil
+Paper: Structural barriers drive gender inequality across academic careers in Brazilian ecology
 
 ## Code:
 Chi-tests.R - analysis of relevant questions based on paper goals
